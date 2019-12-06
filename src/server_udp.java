@@ -21,31 +21,38 @@ public class server_udp extends Thread{
             
             while(true){
                 
-                //On s'occupe maintenant de l'objet paquet
-                byte[] buffer = new byte[8192];
+                //On s'occupe de l'objet paquet
+                byte[] buffer = new byte[100000];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                                 
                 //Cette méthode permet de récupérer le datagramme envoyé par le client
                 //Elle bloque le thread jusqu'à ce que celui-ci ait reçu quelque chose.
                 serv.receive(packet);
                 
+                //Test deserialization du message 
+                ByteArrayInputStream baos = new ByteArrayInputStream(buffer);
+                ObjectInputStream oos = new ObjectInputStream(baos);
+                Message m = (Message)oos.readObject();
+                System.out.println(m.get_data());
+                
                 //nous récupérons le contenu de celui-ci et nous l'affichons
-                String str = new String(packet.getData());
+                /*String str = new String(packet.getData());
                 System.out.println("Message : Addresse " + packet.getAddress() 
                                 + " sur le port " + packet.getPort() + " : ");
-                System.out.println(str);
+                System.out.println(str);*/
                 
                 //On réinitialise la taille du datagramme, pour les futures réceptions
-                packet.setLength(buffer.length);
-                                
-                
+                packet.setLength(buffer.length);                
             }
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        } catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
     }
