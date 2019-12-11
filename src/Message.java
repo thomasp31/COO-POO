@@ -1,11 +1,16 @@
-import java.io.Serializable;
+import java.net.*;
+import java.io.*;
+import javax.swing.*;
+import java.lang.*;
+import java.util.*;
+
 
 
 
 public class Message implements Serializable{
 	
 	
-	private  static  final  long serialVersionUID =  1L;
+	private  static  final  long serialVersionUID =  1;
 	private User user_src;
 	private User user_dest;
 	private int idu_src = 0;
@@ -13,11 +18,9 @@ public class Message implements Serializable{
 	private String data ="";
 	private String type;
 	
-	public Message(User init_user_src, User init_user_dest,String init_type) {
+	public Message(String init_type,User init_user_src,User init_user_dest) {
 		this.user_src = init_user_src;
 		this.user_dest = init_user_dest;
-		this.idu_src = user_src.get_id();
-		this.idu_dest = user_dest.get_id();
 		this.type = init_type;
 		
 	}
@@ -31,7 +34,17 @@ public class Message implements Serializable{
 		return this.data;
 	}
 	
+	public String get_type() {
+		return this.type;
+		
+	}
+	public User get_user_src() {
+		return this.user_src;
+	}
 	
+	public User get_user_dst() {
+		return this.user_dest;
+	}
 	
 	
 }

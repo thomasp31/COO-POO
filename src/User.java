@@ -14,8 +14,8 @@ public class User implements Serializable{
 	 private static int current_ID =0;
 	 private int personnal_ID;
 	 private String pseudo; 
-	 private String login;
-	 private String state; 
+	 private transient String login;
+	 private transient String state; 
 	 //private ArrayList<User> Connected_Users = new ArrayList<User>();
 	 private String ip_addr;
 	 

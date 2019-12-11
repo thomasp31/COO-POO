@@ -30,10 +30,18 @@ public class server_udp extends Thread{
                 serv.receive(packet);
                 
                 //Test deserialization du message 
-                ByteArrayInputStream baos = new ByteArrayInputStream(buffer);
+                ByteArrayInputStream baos = new ByteArrayInputStream(packet.getData());
                 ObjectInputStream oos = new ObjectInputStream(baos);
+                System.out.println("1 input stream ok ");
                 Message m = (Message)oos.readObject();
+                System.out.println("2 read Object ");
                 System.out.println(m.get_data());
+                System.out.println(m.get_type());
+                //affichage du pseudo de la srce
+                System.out.println(m.get_user_src().get_pseudo());
+                //Test login a afficher
+                System.out.println("Login de la source : " + m.get_user_src().get_login());
+                
                 
                 //nous récupérons le contenu de celui-ci et nous l'affichons
                 /*String str = new String(packet.getData());

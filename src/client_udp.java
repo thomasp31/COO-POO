@@ -28,7 +28,7 @@ public class client_udp extends Thread{
         while(true){
             Scanner input = new Scanner(System.in);
             String envoi = input.nextLine();
-            Message message = new Message(user_src,user_dest,"NORMAL");
+            Message message = new Message("NORMAL",this.user_src,this.user_dest);
             message.set_data(envoi);
             
             
@@ -38,18 +38,24 @@ public class client_udp extends Thread{
             	
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(message);
                 byte[] buff = baos.toByteArray();
                 
-                oos.writeObject(message);
-                oos.flush();
+                
+                //oos.writeInt(1);
+                //oos.writeObject(message);
+                //oos.flush();
                 
                 
                 
             //On initialise la connexion côté client
                 DatagramSocket client = new DatagramSocket();
                 
+                //Affichage adresse ip de la machine
+                System.out.println(this.user_dest.get_local_ip());
+                
                 //On crée notre datagramme
-                InetAddress adresse = InetAddress.getByName("127.0.0.1");
+                InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
                 DatagramPacket packet = new DatagramPacket(buff, buff.length, adresse, port_dest);
                 
                 //On lui affecte les données à envoyer
