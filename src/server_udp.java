@@ -50,7 +50,9 @@ public class server_udp extends Thread{
                 System.out.println(str);*/
                 
                 //On réinitialise la taille du datagramme, pour les futures réceptions
-                packet.setLength(buffer.length);                
+                packet.setLength(buffer.length);     
+                
+                
             }
         } catch (SocketException e) {
             e.printStackTrace();
@@ -61,7 +63,7 @@ public class server_udp extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
+        
+        
     }
 }

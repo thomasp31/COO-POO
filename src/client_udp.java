@@ -10,6 +10,7 @@ public class client_udp extends Thread{
     private int port_dest;
     private User user_src;
     private User user_dest;
+    private String addr_ip_dest="";
     
 
     public client_udp(int init_port_dest,User init_user_src,User init_user_dest){
@@ -26,9 +27,13 @@ public class client_udp extends Thread{
         int nbre = 0;
 
         while(true){
+        	
+        	
+        	
+        	
+        	Message message = new Message("NORMAL",this.user_src,this.user_dest);
             Scanner input = new Scanner(System.in);
             String envoi = input.nextLine();
-            Message message = new Message("NORMAL",this.user_src,this.user_dest);
             message.set_data(envoi);
             
             
@@ -48,14 +53,25 @@ public class client_udp extends Thread{
                 
                 
                 
-            //On initialise la connexion côté client
+                //On initialise la connexion côté client
                 DatagramSocket client = new DatagramSocket();
                 
                 //Affichage adresse ip de la machine
                 System.out.println(this.user_dest.get_local_ip());
                 
                 //On crée notre datagramme
-                InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
+                //InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
+                if (message.get_type().equals("BROADCAST")) {
+                	System.out.println(" Envoi en broadcast \n");
+                	addr_ip_dest = "255.255.255.255";
+            
+                }
+                else if (message.get_type().equals("NORMAL")) {
+                	System.out.println("Envoi de data");
+                	addr_ip_dest = "10.1.5.69";
+                }
+                
+                InetAddress adresse = InetAddress.getByName(addr_ip_dest);
                 DatagramPacket packet = new DatagramPacket(buff, buff.length, adresse, port_dest);
                 
                 //On lui affecte les données à envoyer
@@ -74,6 +90,11 @@ public class client_udp extends Thread{
                 e.printStackTrace();
             }
         }
+        
+        
     }      
+    public void set_dest(User U) {
+    	this.user_dest = U;
+    }
 
 }
