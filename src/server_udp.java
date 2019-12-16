@@ -50,6 +50,7 @@ public class server_udp extends Thread{
                 	
                 }
                 System.out.println(m.get_user_src().get_pseudo());
+                
                 //Test login a afficher
                 System.out.println("Login de la source : " + m.get_user_src().get_login());
                 

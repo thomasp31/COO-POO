@@ -18,14 +18,23 @@ public class main{
         
         if (Integer.parseInt(args[2]) == Pierre.get_id()) {
 	        
+        	
 	        client_udp client1 = new client_udp(port_client,Pierre,Thomas);
+	        
+	        
 	        System.out.println(Thomas.get_local_ip());
+	        
         }
 	        
         if (Integer.parseInt(args[2]) == Thomas.get_id()) {
 	        
+        	Conversation convpierre = new Conversation(0,Pierre,Thomas);
+        	Thomas.ajouter_conversation(convpierre);
+        	
 	        client_udp client2 = new client_udp(port_client,Thomas,Pierre);
 	        System.out.println(Pierre.get_local_ip());
+	        
+	        
 	        //System.out.println(Pierre.get_local_ip());
         
         }

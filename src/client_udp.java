@@ -31,7 +31,7 @@ public class client_udp extends Thread{
         	
         	
         	
-        	Message message = new Message("NORMAL",this.user_src,this.user_dest,1);
+        	Message message = new Message("NORMAL",this.user_src,this.user_dest,0);
             Scanner input = new Scanner(System.in);
             String envoi = input.nextLine();
             message.set_data(envoi);
@@ -68,7 +68,7 @@ public class client_udp extends Thread{
                 }
                 else if (message.get_type().equals("NORMAL")) {
                 	System.out.println("Envoi de data");
-                	addr_ip_dest = "10.1.5.69";
+                	addr_ip_dest = "localhost";
                 }
                 
                 InetAddress adresse = InetAddress.getByName(addr_ip_dest);

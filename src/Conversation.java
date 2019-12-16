@@ -11,7 +11,8 @@ public class Conversation{
 	private int id_conv;
 	private User user_src_conv;
 	private User user_dest_conv;
-	private ArrayList<Message> messages_echanges = new ArrayList<Message>();
+	//attention : remettre en privé !!
+	public ArrayList<Message> messages_echanges = new ArrayList<Message>();
 	
 	public Conversation(int init_ID_conv, User init_user_src, User init_user_dest) {
 		this.id_conv= init_ID_conv;

@@ -18,7 +18,7 @@ public class User implements Serializable{
 	 private transient String state; 
 	 //private ArrayList<User> Connected_Users = new ArrayList<User>();
 	 private String ip_addr;
-	 private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
+	 private transient ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
 	 
 	 
 	 
@@ -94,13 +94,14 @@ public class User implements Serializable{
 	 
 	 
 	 //permet d'ajouter une conversation a la liste des conversations actives de l'user
-	 public void ajouter_conservation(Conversation c) {
+	 public void ajouter_conversation(Conversation c) {
 		 
 		 list_conversation.add(c);
 		 
 	 }
 	 
 	 //retourne une conversation de l'user grace a son id
+	 //probleme quand il trouve pas la conv
 	 
 	 public Conversation get_conversation_by_id(int id_conv) {
 		 Conversation returned_conversation = null; 
