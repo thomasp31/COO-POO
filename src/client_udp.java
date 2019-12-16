@@ -31,7 +31,7 @@ public class client_udp extends Thread{
         	
         	
         	
-        	Message message = new Message("NORMAL",this.user_src,this.user_dest);
+        	Message message = new Message("NORMAL",this.user_src,this.user_dest,1);
             Scanner input = new Scanner(System.in);
             String envoi = input.nextLine();
             message.set_data(envoi);

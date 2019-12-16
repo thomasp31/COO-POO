@@ -38,12 +38,24 @@ public class server_udp extends Thread{
                 System.out.println(m.get_data());
                 System.out.println(m.get_type());
                 //affichage du pseudo de la srce
+                // ajoute le message dans la conversation voulu en regardant l'id_conv du message
+                
+                // remarque : ON A PAS ENCORE PRIS EN COMPTE LE CAS OU C'EST LE PREMIER MESSAGE ET OU LA CONVERSATION
+                // N'A PAS ENCORE ETE CREE
+                
+                if (m.get_type().equals("NORMAL")) {
+                	User user_dest = m.get_user_dst();
+                	Conversation conv = user_dest.get_conversation_by_id(m.get_id_conv());
+                	conv.ajouter_message(m);
+                	
+                }
                 System.out.println(m.get_user_src().get_pseudo());
                 //Test login a afficher
                 System.out.println("Login de la source : " + m.get_user_src().get_login());
                 
                 
-                //nous récupérons le contenu de celui-ci et nous l'affichons
+                
+                //nous récupèrons le contenu de celui-ci et nous l'affichons
                 /*String str = new String(packet.getData());
                 System.out.println("Message : Addresse " + packet.getAddress() 
                                 + " sur le port " + packet.getPort() + " : ");
