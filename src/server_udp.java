@@ -6,9 +6,11 @@ import java.util.*;
 
 public class server_udp extends Thread{
     public int port_local;
+    public User serveur_u_source;
 
-    public server_udp(int init_p_local){
+    public server_udp(int init_p_local,User init_u_source){
         this.port_local= init_p_local;
+        this.serveur_u_source = init_u_source; 
         start();
     }
 
@@ -32,11 +34,9 @@ public class server_udp extends Thread{
                 //Test deserialization du message 
                 ByteArrayInputStream baos = new ByteArrayInputStream(packet.getData());
                 ObjectInputStream oos = new ObjectInputStream(baos);
-                System.out.println("1 input stream ok ");
                 Message m = (Message)oos.readObject();
-                System.out.println("2 read Object ");
-                System.out.println(m.get_data());
-                System.out.println(m.get_type());
+                System.out.println("message recu : " + m.get_data());
+                System.out.println("TYPE message : " +  m.get_type());
                 //affichage du pseudo de la srce
                 // ajoute le message dans la conversation voulu en regardant l'id_conv du message
                 
@@ -45,22 +45,41 @@ public class server_udp extends Thread{
                 
                 if (m.get_type().equals("NORMAL")) {
                 	User user_dest = m.get_user_dst();
-                	Conversation conv = user_dest.get_conversation_by_id(m.get_id_conv());
+                	System.out.println("Pseudo du destinataire: " + m.get_user_dst().get_pseudo());
+                	Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
                 	conv.ajouter_message(m);
+                	System.out.println("ID de la conversation : " + conv.get_id_conv());
                 	
+                }else if (m.get_type().equals("BROADCAST")){
+                	//user_src du message reçu correspond au destinataire du message a renvoyer
+                	
+                	Message mes_reponse = new Message("REP_BROADCAST",serveur_u_source,m.get_user_src(),0);
+                	
+                	ByteArrayOutputStream baosBroadcast = new ByteArrayOutputStream();
+                    ObjectOutputStream oosBroadcast = new ObjectOutputStream(baosBroadcast);
+                    oosBroadcast.writeObject(mes_reponse);
+                    byte[] buffBroadcast = baosBroadcast.toByteArray();
+                    DatagramSocket client = new DatagramSocket();
+                    InetAddress adresse = InetAddress.getByName(m.get_user_src().get_IP());
+                    DatagramPacket packetBroadcast = new DatagramPacket(buffBroadcast, buffBroadcast.length, adresse, m.get_user_src().get_port_ecoute());
+                    
+                    packet.setData(buffBroadcast);
+                    client.send(packetBroadcast);
+                    
+                }else if (m.get_type().equals("REP_BROADCAST")){
+                	User user_src_RepBrdcst = m.get_user_src();
+                	System.out.println("Pseudo de la source du message reçu : " + m.get_user_src().get_pseudo());
+                	System.out.println("type du message : " + m.get_type());
+                	//Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
+                	//conv.ajouter_message(m);
+                	//System.out.println("ID de la conversation : " + conv.get_id_conv());
                 }
-                System.out.println(m.get_user_src().get_pseudo());
+                
+                
                 
                 //Test login a afficher
-                System.out.println("Login de la source : " + m.get_user_src().get_login());
+                System.out.println("Pseudo de la source : " + m.get_user_src().get_pseudo() + "\n");
                 
-                
-                
-                //nous récupèrons le contenu de celui-ci et nous l'affichons
-                /*String str = new String(packet.getData());
-                System.out.println("Message : Addresse " + packet.getAddress() 
-                                + " sur le port " + packet.getPort() + " : ");
-                System.out.println(str);*/
                 
                 //On réinitialise la taille du datagramme, pour les futures réceptions
                 packet.setLength(buffer.length);     

@@ -6,7 +6,7 @@ import java.lang.*;
 import java.util.*;
 
 
-public class Conversation{
+public class Conversation implements Serializable{
 	
 	private int id_conv;
 	private User user_src_conv;

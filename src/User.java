@@ -16,19 +16,20 @@ public class User implements Serializable{
 	 private String pseudo; 
 	 private transient String login;
 	 private transient String state; 
+	 private int port_ecoute;
 	 //private ArrayList<User> Connected_Users = new ArrayList<User>();
 	 private String ip_addr;
-	 private transient ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
+	 private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
 	 
 	 
 	 
-	 public User(String init_pseudo,String init_login,String init_state) {
+	 public User(String init_pseudo,String init_login,String init_state, int init_port_ecoute) {
 		 current_ID++;
 		 this.personnal_ID=current_ID;
 		 this.pseudo= init_pseudo;
 		 this.login=init_login;
 		 this.ip_addr = this.get_local_ip();
-		 
+		 this.port_ecoute=init_port_ecoute;
 	 }
 	 
 	 public void ListUpdate() {
@@ -37,7 +38,17 @@ public class User implements Serializable{
 	 }
 	 
 	 
+	 public int get_port_ecoute() {
+		 return this.port_ecoute;
+	 }
 	 
+	 public void set_port_ecoute(int p) {
+		 this.port_ecoute=p;
+	 }
+	 
+	 public String get_IP() {
+		 return this.ip_addr;
+	 }
 	 
 	 public int get_id() {
 		 return this.personnal_ID;
@@ -101,13 +112,23 @@ public class User implements Serializable{
 	 }
 	 
 	 //retourne une conversation de l'user grace a son id
-	 //probleme quand il trouve pas la conv
+	 //probleme quand il trouve pas la conv (
 	 
 	 public Conversation get_conversation_by_id(int id_conv) {
-		 Conversation returned_conversation = null; 
-		 for(int i = 0 ; i < this.list_conversation.size(); i++) {
-			 if (this.list_conversation.get(i).get_id_conv()== id_conv) {
-				 returned_conversation = list_conversation.get(i);
+		 
+		 Conversation returned_conversation = new Conversation(666,null,null);
+		 //System.out.println("get_by_id 1... \n");
+		 
+		 if (this.list_conversation==null) {
+				System.out.println("conversation non existante dans la liste"); 
+				//System.out.println("get_by_id 2... \n");
+		 }
+		 
+		 else { 
+			for(int i = 0 ; i < this.list_conversation.size(); i++) {
+				 if (this.list_conversation.get(i).get_id_conv()== id_conv) {
+					 returned_conversation = list_conversation.get(i);
+				 }
 			 }
 		 }
 		 return returned_conversation;

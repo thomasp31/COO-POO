@@ -29,9 +29,9 @@ public class client_udp extends Thread{
         while(true){
         	
         	
-        	
-        	
-        	Message message = new Message("NORMAL",this.user_src,this.user_dest,0);
+       
+        	Message message = new Message("BROADCAST",this.user_src,this.user_dest,0);
+        	System.out.println("Tapez votre message : ");
             Scanner input = new Scanner(System.in);
             String envoi = input.nextLine();
             message.set_data(envoi);
@@ -56,8 +56,8 @@ public class client_udp extends Thread{
                 //On initialise la connexion côté client
                 DatagramSocket client = new DatagramSocket();
                 
-                //Affichage adresse ip de la machine
-                System.out.println(this.user_dest.get_local_ip());
+                //Affichage adresse ip de la machine destinataire
+                System.out.println("adresse Ip du destinataire " + this.user_dest.get_local_ip());
                 
                 //On crée notre datagramme
                 //InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
@@ -67,7 +67,6 @@ public class client_udp extends Thread{
             
                 }
                 else if (message.get_type().equals("NORMAL")) {
-                	System.out.println("Envoi de data");
                 	addr_ip_dest = "localhost";
                 }
                 
@@ -80,7 +79,9 @@ public class client_udp extends Thread{
                 //On envoie au serveur
                 client.send(packet);
                 
-                System.out.println("DONE SENDING");
+                
+                
+                System.out.println("DONE SENDING \n");
                     
             } catch (SocketException e) {
                 e.printStackTrace();
