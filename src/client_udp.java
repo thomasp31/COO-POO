@@ -30,11 +30,13 @@ public class client_udp extends Thread{
         	
         	
        
-        	Message message = new Message("BROADCAST",this.user_src,this.user_dest,0);
+        	Message message = new Message("NORMAL",this.user_src,this.user_dest,0);
         	System.out.println("Tapez votre message : ");
             Scanner input = new Scanner(System.in);
+            
             String envoi = input.nextLine();
             message.set_data(envoi);
+            message.set_date();
             
             
               

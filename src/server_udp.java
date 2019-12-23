@@ -49,6 +49,7 @@ public class server_udp extends Thread{
                 	Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
                 	conv.ajouter_message(m);
                 	System.out.println("ID de la conversation : " + conv.get_id_conv());
+                	System.out.println("Date de l'envoi du message : " + m.get_date());
                 	
                 }else if (m.get_type().equals("BROADCAST")){
                 	//user_src du message reçu correspond au destinataire du message a renvoyer
