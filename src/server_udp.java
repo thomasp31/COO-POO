@@ -55,7 +55,7 @@ public class server_udp extends Thread{
                 	//user_src du message reçu correspond au destinataire du message a renvoyer
                 	
                 	Message mes_reponse = new Message("REP_BROADCAST",serveur_u_source,m.get_user_src(),0);
-                	
+                	mes_reponse.set_data("Automatique");
                 	ByteArrayOutputStream baosBroadcast = new ByteArrayOutputStream();
                     ObjectOutputStream oosBroadcast = new ObjectOutputStream(baosBroadcast);
                     oosBroadcast.writeObject(mes_reponse);
