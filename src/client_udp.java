@@ -11,14 +11,14 @@ public class client_udp extends Thread{
     private User user_src;
     private User user_dest;
     private String addr_ip_dest="";
-    
+    private Message message_to_send;
 
     public client_udp(int init_port_dest,User init_user_src,User init_user_dest){
         this.port_dest = init_port_dest;
         this.user_src = init_user_src;
         this.user_dest = init_user_dest;
         
-        start();
+        //start();
     }
 
 
@@ -26,17 +26,17 @@ public class client_udp extends Thread{
     public void run(){
         int nbre = 0;
 
-        while(true){
+        //while(true){
         	
         	
        
-        	Message message = new Message("NORMAL",this.user_src,this.user_dest,0);
-        	System.out.println("Tapez votre message : ");
-            Scanner input = new Scanner(System.in);
+        	//Message message = new Message("NORMAL",this.user_src,this.user_dest,0);
+        	//System.out.println("Tapez votre message : ");
+            //Scanner input = new Scanner(System.in);
             
-            String envoi = input.nextLine();
-            message.set_data(envoi);
-            message.set_date();
+            //String envoi = input.nextLine();
+            //message.set_data(envoi);
+            //message.set_date();
             
             
               
@@ -45,7 +45,7 @@ public class client_udp extends Thread{
             	
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
-                oos.writeObject(message);
+                oos.writeObject(message_to_send);
                 byte[] buff = baos.toByteArray();
                 
                 
@@ -63,12 +63,12 @@ public class client_udp extends Thread{
                 
                 //On crée notre datagramme
                 //InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
-                if (message.get_type().equals("BROADCAST")) {
+                if (message_to_send.get_type().equals("BROADCAST")) {
                 	System.out.println(" Envoi en broadcast \n");
                 	addr_ip_dest = "255.255.255.255";
             
                 }
-                else if (message.get_type().equals("NORMAL")) {
+                else if (message_to_send.get_type().equals("NORMAL")) {
                 	addr_ip_dest = "localhost";
                 }
                 
@@ -92,12 +92,17 @@ public class client_udp extends Thread{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        //}
         
         
     }      
+    
     public void set_dest(User U) {
     	this.user_dest = U;
     }
 
+    public void set_message(Message m) {
+    	this.message_to_send=m;
+    }
+    
 }

@@ -28,13 +28,16 @@ public class Interface_accueil {
 	public int port_src;
 	public int port_dest;
 	public User user_local;
+	public User user_dest;// A changer quand on aura plusieurs utilisateurs
 	public JTextArea textAreaMessage;
+	public JTextField inputMessage;
 	
-    public Interface_accueil(String l, int init_port_src, int init_port_dest, User u_local){
+    public Interface_accueil(String l, int init_port_src, int init_port_dest, User u_local, User u_dest){
     	
     	port_src = init_port_src;
     	port_dest = init_port_dest;
     	user_local = u_local;
+    	user_dest = u_dest;
     	
     	JFrame f=new JFrame("my chat");
         f.setSize(400,400);        
@@ -75,11 +78,10 @@ public class Interface_accueil {
         conversationPanel.add(textAreaMessage,BorderLayout.CENTER);
         textAreaMessage.setEditable(false);
        
-        JTextField inputMessage = new JTextField();
+        inputMessage = new JTextField();
         envoiMessage.add(inputMessage,BorderLayout.CENTER);
         JButton sendButton = new JButton("SEND");
         envoiMessage.add(sendButton,BorderLayout.EAST);
-        
         
         conversationPanel.add(envoiMessage,BorderLayout.SOUTH);
         
@@ -104,6 +106,25 @@ public class Interface_accueil {
         f.setContentPane(mainPanel);
         f.setVisible(true);                           
         
+        
+        //Initialisation du serveur et du client
+        
         server_udp server = new server_udp(port_src, user_local, textAreaMessage);
+        
+        client_udp client1 = new client_udp(port_dest,user_local,user_dest);
+        
+        sendButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent ev) {
+        		String s = inputMessage.getText();
+        		Message m = new Message("NORMAL", user_local, user_dest, 0 );
+        		m.set_data(s);
+        		m.set_date();
+        		textAreaMessage.append("Message envoyé : " + s + "\n");
+        		textAreaMessage.append(m.get_date() + "\n");
+        		client1.set_message(m);
+        		client1.run();
+        	}
+        });
     }
+    
 }

@@ -22,7 +22,7 @@ public class main{
         
         if (Integer.parseInt(args[2]) == Pierre.get_id()) {
 	        Pierre.set_port_ecoute(port_ecoute);
-	        Interface_accueil I = new Interface_accueil("PIERRE", port_ecoute,port_dest,Pierre);
+	        Interface_accueil I = new Interface_accueil("PIERRE", port_ecoute,port_dest,Pierre,Thomas);
         	//server_udp server = new server_udp(port_ecoute,Pierre);
 	        //client_udp client1 = new client_udp(port_dest,Pierre,Thomas);
 	        
@@ -35,12 +35,12 @@ public class main{
 	        
         	//Conversation convpierre = new Conversation(0,Thomas,Pierre);
         	//Thomas.ajouter_conversation(convpierre);
-        	System.out.println("Conversation ajouté");
+        	//System.out.println("Conversation ajouté");
         	Thomas.set_port_ecoute(port_ecoute);
-        	
+        	Interface_accueil I = new Interface_accueil("THOMAS", port_ecoute,port_dest,Thomas,Pierre);
         	//server_udp server = new server_udp(port_ecoute,Thomas);
-	        client_udp client2 = new client_udp(port_dest,Thomas,Pierre);
-	        System.out.println("adresse IP source : " + Pierre.get_local_ip() +"\n");
+	        //client_udp client2 = new client_udp(port_dest,Thomas,Pierre);
+	        //System.out.println("adresse IP source : " + Pierre.get_local_ip() +"\n");
 	        
 	        
 	        //System.out.println(Pierre.get_local_ip());
