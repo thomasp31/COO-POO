@@ -40,7 +40,7 @@ public class Interface_accueil {
     	user_dest = u_dest;
     	
     	JFrame f=new JFrame("my chat");
-        f.setSize(400,400);        
+        f.setSize(800,800);        
         
         /*Définition des Panel*/
         
