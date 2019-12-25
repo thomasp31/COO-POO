@@ -75,7 +75,9 @@ public class Interface_accueil {
 		
         
         textAreaMessage = new JTextArea();
-        conversationPanel.add(textAreaMessage,BorderLayout.CENTER);
+        JScrollPane scroll = new JScrollPane(textAreaMessage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        //conversationPanel.add(textAreaMessage,BorderLayout.CENTER);
+        conversationPanel.add(scroll, BorderLayout.CENTER);
         textAreaMessage.setEditable(false);
        
         inputMessage = new JTextField();
