@@ -84,7 +84,7 @@ public class Connection_Interface extends JFrame implements ActionListener {
         	this.dispose();
         }
         else {
-            message.setText(" Yo Pierre, si tu as tapé 1 en argument pour ouvrir la fenêtre alors met Pierre en login et pasword, Sinon mets Thomas en login et password");
+            message.setText(" Password incorrect, try again !");
         }
 
     }
