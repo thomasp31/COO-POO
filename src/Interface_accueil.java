@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -60,9 +61,13 @@ public class Interface_accueil {
         filePanel.setLayout(new BorderLayout());
         
         /*********************************************************************/
-        JList listUsers = new JList();
+        JButton updateBtn = new JButton("UPDATE");
+        userPanel.add(updateBtn,BorderLayout.NORTH);
+        
+        DefaultListModel model = new DefaultListModel();
+        JList listUsers = new JList(model);
 		listUsers.setBackground(Color.cyan);
-		listUsers.setModel(new AbstractListModel() {
+		/*listUsers.setModel(new AbstractListModel() {
 			String[] values = new String[] {"USER 1", "USER 2", "USER 3", "USER 4"};
 			public int getSize() {
 				return values.length;
@@ -70,7 +75,7 @@ public class Interface_accueil {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		userPanel.add(listUsers);
 		
         
@@ -111,8 +116,7 @@ public class Interface_accueil {
         
         //Initialisation du serveur et du client
         
-        server_udp server = new server_udp(port_src, user_local, textAreaMessage);
-        
+        server_udp server = new server_udp(port_src, user_local, textAreaMessage, model);
         client_udp client1 = new client_udp(port_dest,user_local,user_dest);
         
         sendButton.addActionListener(new ActionListener() {
@@ -125,8 +129,20 @@ public class Interface_accueil {
         		textAreaMessage.append(m.get_date() + "\n");
         		client1.set_message(m);
         		client1.run();
+        		inputMessage.setText("");
         	}
         });
+        
+        updateBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent ev) {
+        		listUsers.removeAll();
+        		Message message_broadcast = new Message("BROADCAST",user_local, null, 0);
+        		message_broadcast.set_data("Automatique");
+        		client1.set_message(message_broadcast);
+        		
+        	}
+        });
+        
     }
     
 }

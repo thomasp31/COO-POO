@@ -2,17 +2,22 @@ import java.net.*;
 import java.io.*;
 import javax.swing.*;
 import java.lang.*;
+import javax.swing.JList;
 import java.util.*;
 
 public class server_udp extends Thread{
     public int port_local;
-    public User serveur_u_source;
+    public User ulocal;
     public JTextArea display_zone;
-
-    public server_udp(int init_p_local,User init_u_source, JTextArea jta){
+    //public JList<User> Connected_Users = new JList<User>();
+    public DefaultListModel DLM; //permet de relier au model dans INterface_Accueil
+    
+    public server_udp(int init_p_local,User init_u_source, JTextArea jta, DefaultListModel model){
         this.port_local= init_p_local;
-        this.serveur_u_source = init_u_source; 
+        this.ulocal = init_u_source; 
         this.display_zone = jta;
+        //this.Connected_Users=Jl;
+        this.DLM=model;
         start();
     }
 
@@ -52,7 +57,7 @@ public class server_udp extends Thread{
                 	display_zone.append(m.get_date() + "\n");
                 	User user_dest = m.get_user_dst();
                 	//System.out.println("Pseudo du destinataire: " + m.get_user_dst().get_pseudo());
-                	Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
+                	Conversation conv = ulocal.get_conversation_by_id(m.get_id_conv());
                 	conv.ajouter_message(m);
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
                 	//System.out.println("Date de l'envoi du message : " + m.get_date());
@@ -60,7 +65,7 @@ public class server_udp extends Thread{
                 }else if (m.get_type().equals("BROADCAST")){
                 	//user_src du message reçu correspond au destinataire du message a renvoyer
                 	
-                	Message mes_reponse = new Message("REP_BROADCAST",serveur_u_source,m.get_user_src(),0);
+                	Message mes_reponse = new Message("REP_BROADCAST",ulocal,m.get_user_src(),0);
                 	mes_reponse.set_data("Automatique");
                 	ByteArrayOutputStream baosBroadcast = new ByteArrayOutputStream();
                     ObjectOutputStream oosBroadcast = new ObjectOutputStream(baosBroadcast);
@@ -72,6 +77,7 @@ public class server_udp extends Thread{
                     
                     packet.setData(buffBroadcast);
                     client.send(packetBroadcast);
+                    this.DLM.addElement(m.get_user_src().get_pseudo());
                     
                 }else if (m.get_type().equals("REP_BROADCAST")){
                 	User user_src_RepBrdcst = m.get_user_src();
@@ -80,6 +86,7 @@ public class server_udp extends Thread{
                 	//Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
                 	//conv.ajouter_message(m);
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
+                	this.DLM.addElement(m.get_user_src());
                 }
                 
                 

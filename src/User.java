@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.net.NetworkInterface; 
 import java.util.*;
 import java.io.Serializable;
+import javax.swing.JList;
 
 public class User implements Serializable{
 	
@@ -17,7 +18,7 @@ public class User implements Serializable{
 	 private transient String login;
 	 private transient String state; 
 	 private int port_ecoute;
-	 //private ArrayList<User> Connected_Users = new ArrayList<User>();
+	 //public transient JList<User> Connected_Users = new JList<User>();
 	 private String ip_addr;
 	 private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
 	 
@@ -32,10 +33,10 @@ public class User implements Serializable{
 		 this.port_ecoute=init_port_ecoute;
 	 }
 	 
-	 public void ListUpdate() {
+	 /*public void ListUpdate() {
 		 //TODO
 		 
-	 }
+	 }*/
 	 
 	 
 	 public int get_port_ecoute() {
@@ -95,7 +96,6 @@ public class User implements Serializable{
 	                       // "\n\t isSiteLocalAddress? "+a.isSiteLocalAddress()+
 	                        //"\n\t isIPV6? "+(a instanceof Inet6Address));
 	                }
-	       
 	            }
 	        }catch(Exception ex){
 	            System.out.println("erreurEnumeration");
