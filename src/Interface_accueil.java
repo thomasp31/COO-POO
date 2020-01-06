@@ -22,6 +22,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.Scrollbar;
 
 public class Interface_accueil {
@@ -142,8 +145,29 @@ public class Interface_accueil {
         		client1.run();
         		
         	}
+        	
         });
         
-    }
+        listUsers.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				jList1ValueChanged(e,listUsers,client1);
+				textAreaMessage.setText(null);
+			}
+        });
+    } 
+    
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,client_udp c) {
+        //set text on right here
+        String s = (String) listUsers.getSelectedValue();
+        
+        for(User u : user_local.Connected_Users) {
+        	if (s.equals(u.get_pseudo())) {
+        		c.set_dest(u);
+        	}
+            
+        }
+	}
     
 }

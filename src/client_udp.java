@@ -67,9 +67,8 @@ public class client_udp extends Thread{
                 	System.out.println(" Envoi en broadcast \n");
                 	addr_ip_dest = "255.255.255.255";
             
-                }
-                else if (message_to_send.get_type().equals("NORMAL")) {
-                	addr_ip_dest = "localhost";
+                }else if (message_to_send.get_type().equals("NORMAL")) {
+                	addr_ip_dest = user_dest.get_IP();
                 }
                 
                 InetAddress adresse = InetAddress.getByName(addr_ip_dest);
@@ -99,6 +98,7 @@ public class client_udp extends Thread{
     
     public void set_dest(User U) {
     	this.user_dest = U;
+    	this.addr_ip_dest = U.get_IP();
     }
 
     public void set_message(Message m) {

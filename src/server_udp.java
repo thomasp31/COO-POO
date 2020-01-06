@@ -75,9 +75,11 @@ public class server_udp extends Thread{
                     InetAddress adresse = InetAddress.getByName(m.get_user_src().get_IP());
                     DatagramPacket packetBroadcast = new DatagramPacket(buffBroadcast, buffBroadcast.length, adresse, m.get_user_src().get_port_ecoute());
                     
+                    
                     packet.setData(buffBroadcast);
                     client.send(packetBroadcast);
                     this.DLM.addElement(m.get_user_src().get_pseudo());
+                    ulocal.Connected_Users.add(m.get_user_src());
                     System.out.println("Broadcast recu \n");
                     
                 }else if (m.get_type().equals("REP_BROADCAST")){
@@ -87,8 +89,11 @@ public class server_udp extends Thread{
                 	//Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
                 	//conv.ajouter_message(m);
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
-                	this.DLM.addElement(m.get_user_src());
+                	this.DLM.addElement(m.get_user_src().get_pseudo());
                 	System.out.println("Rep broadcast recu \n");
+                	ulocal.Connected_Users.add(m.get_user_src());
+                	
+                	
                 }
                 
                 

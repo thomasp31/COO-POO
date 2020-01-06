@@ -18,7 +18,7 @@ public class User implements Serializable{
 	 private transient String login;
 	 private transient String state; 
 	 private int port_ecoute;
-	 //public transient JList<User> Connected_Users = new JList<User>();
+	 public transient ArrayList<User> Connected_Users = new ArrayList<User>();
 	 private String ip_addr;
 	 private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
 	 
