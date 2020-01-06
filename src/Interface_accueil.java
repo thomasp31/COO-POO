@@ -139,6 +139,7 @@ public class Interface_accueil {
         		Message message_broadcast = new Message("BROADCAST",user_local, null, 0);
         		message_broadcast.set_data("Automatique");
         		client1.set_message(message_broadcast);
+        		client1.run();
         		
         	}
         });

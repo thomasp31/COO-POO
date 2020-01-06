@@ -78,6 +78,7 @@ public class server_udp extends Thread{
                     packet.setData(buffBroadcast);
                     client.send(packetBroadcast);
                     this.DLM.addElement(m.get_user_src().get_pseudo());
+                    System.out.println("Broadcast recu \n");
                     
                 }else if (m.get_type().equals("REP_BROADCAST")){
                 	User user_src_RepBrdcst = m.get_user_src();
@@ -87,6 +88,7 @@ public class server_udp extends Thread{
                 	//conv.ajouter_message(m);
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
                 	this.DLM.addElement(m.get_user_src());
+                	System.out.println("Rep broadcast recu \n");
                 }
                 
                 
