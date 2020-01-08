@@ -103,7 +103,7 @@ public class server_udp extends Thread{
                 
                 
                 //On réinitialise la taille du datagramme, pour les futures réceptions
-                packet.setLength(buffer.length);     
+                //packet.setLength(buffer.length);     
                 
                 
             }
