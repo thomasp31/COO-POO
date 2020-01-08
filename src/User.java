@@ -37,7 +37,18 @@ public class User implements Serializable{
 		 for(User u : this.Connected_Users) {
 			 System.out.println(u.get_pseudo()+ "\n");
 		 }
-		 
+	 }
+	 
+	 
+	 
+	 public boolean isInside(String l) {
+		 boolean result = false;
+		 for(User u : this.Connected_Users) {
+			 if (u.get_login().equals(l)) {
+				 result = true;
+			 }
+		 }
+		 return result;
 	 }
 	 
 	 
