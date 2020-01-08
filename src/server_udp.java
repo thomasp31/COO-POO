@@ -78,8 +78,11 @@ public class server_udp extends Thread{
                     
                     packet.setData(buffBroadcast);
                     client.send(packetBroadcast);
-                    this.DLM.addElement(m.get_user_src().get_pseudo());
-                    ulocal.Connected_Users.add(m.get_user_src());
+                	if (ulocal.Connected_Users.contains(m.get_user_src())==false) {
+                		ulocal.Connected_Users.add(m.get_user_src());
+                		this.DLM.addElement(m.get_user_src().get_pseudo());
+                	}
+                    
                     System.out.println("Broadcast recu \n");
                     
                 }else if (m.get_type().equals("REP_BROADCAST")){
@@ -89,9 +92,13 @@ public class server_udp extends Thread{
                 	//Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
                 	//conv.ajouter_message(m);
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
-                	this.DLM.addElement(m.get_user_src().get_pseudo());
+                	if (ulocal.Connected_Users.contains(m.get_user_src())==false) {
+                		ulocal.Connected_Users.add(m.get_user_src());
+                		this.DLM.addElement(m.get_user_src().get_pseudo());
+                	}
+                	
                 	System.out.println("Rep broadcast recu \n");
-                	ulocal.Connected_Users.add(m.get_user_src());
+                	
                 	
                 	
                 }
