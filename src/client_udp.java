@@ -59,7 +59,7 @@ public class client_udp extends Thread{
                 DatagramSocket client = new DatagramSocket();
                 
                 //Affichage adresse ip de la machine destinataire
-                System.out.println("adresse Ip du destinataire " + this.user_dest.get_local_ip());
+                //System.out.println("adresse Ip du destinataire " + this.user_dest.get_local_ip());
                 
                 //On crée notre datagramme
                 //InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
@@ -69,6 +69,7 @@ public class client_udp extends Thread{
             
                 }else if (message_to_send.get_type().equals("NORMAL")) {
                 	addr_ip_dest = user_dest.get_IP();
+                	System.out.println("adresse ip destinataire" + addr_ip_dest);
                 }
                 
                 InetAddress adresse = InetAddress.getByName(addr_ip_dest);
