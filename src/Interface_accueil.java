@@ -87,7 +87,7 @@ public class Interface_accueil {
         //conversationPanel.add(textAreaMessage,BorderLayout.CENTER);
         conversationPanel.add(scroll, BorderLayout.CENTER);
         textAreaMessage.setEditable(false);
-       
+        
         inputMessage = new JTextField();
         envoiMessage.add(inputMessage,BorderLayout.CENTER);
         JButton sendButton = new JButton("SEND");

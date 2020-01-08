@@ -82,6 +82,9 @@ public class Connection_Interface extends JFrame implements ActionListener {
         }else if(userName.trim().equals("Pierre") && password.trim().equals("Pierre")) {
         	Interface_accueil I = new Interface_accueil("Pierre", port_src,port_dest,user_local,user_dest);
         	this.dispose();
+        }else if(userName.trim().equals("Jack") && password.trim().equals("Jack")) {
+        	Interface_accueil I = new Interface_accueil("Jack", port_src,port_dest,user_local,user_dest);
+        	this.dispose();
         }
         else {
             message.setText(" Password incorrect, try again !");

@@ -12,6 +12,7 @@ public class main{
     	
     	User Pierre = new User("Pierrot","pcloury","BG",0);
     	User Thomas = new User("Toto","tpelous","Ultra-BG",0);
+    	User Jack =new User("Ja","Jack","u",0);
     	Conversation convpierre = new Conversation(0,Thomas,Pierre);
     	Thomas.ajouter_conversation(convpierre);
         
@@ -51,6 +52,13 @@ public class main{
 	        //System.out.println(Pierre.get_local_ip());
         
         }
+        
+        if (Integer.parseInt(args[2])== Jack.get_id()){
+        	Jack.set_port_ecoute(port_ecoute);
+        	Connection_Interface CF = new Connection_Interface(port_ecoute,port_dest,Jack,Pierre);
+        }
+        
+        
     }
   
 }

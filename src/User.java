@@ -43,7 +43,7 @@ public class User implements Serializable{
 	 
 	 public boolean isInside(String l) {
 		 boolean result = false;
-		 if (this.Connected_Users.isEmpty()==false) {
+		 if (this.Connected_Users.isEmpty()!= true) {
 			 for(User u : this.Connected_Users) {
 				 if (u.get_login().equals(l)) {
 					 result = true;
