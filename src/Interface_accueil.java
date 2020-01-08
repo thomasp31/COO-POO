@@ -165,6 +165,7 @@ public class Interface_accueil {
         for(User u : user_local.Connected_Users) {
         	if (s.equals(u.get_pseudo())) {
         		c.set_dest(u);
+        		System.out.println("changement de destinataire" + u.get_IP());
         	}
             
         }
