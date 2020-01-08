@@ -33,10 +33,12 @@ public class User implements Serializable{
 		 this.port_ecoute=init_port_ecoute;
 	 }
 	 
-	 /*public void ListUpdate() {
-		 //TODO
+	 public void display_List() {
+		 for(User u : this.Connected_Users) {
+			 System.out.println(u.get_pseudo()+ "\n");
+		 }
 		 
-	 }*/
+	 }
 	 
 	 
 	 public int get_port_ecoute() {
