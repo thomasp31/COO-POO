@@ -55,6 +55,17 @@ public class User implements Serializable{
 		 return result;
 	 }
 	 
+	 public boolean remove_user(User u) {
+		 boolean result = false;
+		 if (this.Connected_Users.isEmpty()!= true) {
+			 for(User user : this.Connected_Users) {
+				 if (user==u) {
+					 this.Connected_Users.remove(user);
+				 }
+			 }
+		 }
+		 return result;
+	 }
 	 
 	 public int get_port_ecoute() {
 		 return this.port_ecoute;

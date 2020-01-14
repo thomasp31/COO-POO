@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+
 import java.awt.FlowLayout;
 import java.awt.Color;
 import javax.swing.JSplitPane;
@@ -18,6 +20,8 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -156,19 +160,40 @@ public class Interface_accueil {
 				textAreaMessage.setText(null);
 			}
         });
+        
+        
+        f.addWindowListener(new WindowAdapter() {
+        	public void windowClosing(WindowEvent e){
+        		int reponse = JOptionPane.showConfirmDialog(f,"Voulez-vous quitter l'application","Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
+        		if (reponse==JOptionPane.YES_OPTION){
+        			Message message_deco= new Message("DISCONNECT",user_local, null, 0);
+            		message_deco.set_data("Automatique");
+            		client1.set_message(message_deco);
+            		client1.run();
+        			f.dispose();
+        		}	
+        		else {
+        			f.setVisible(true);
+        		}
+        		
+        	}
+        });
     } 
     
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,client_udp c) {
         //set text on right here
-        String s = (String) listUsers.getSelectedValue();
-        
-        for(User u : user_local.Connected_Users) {
-        	if (s.equals(u.get_pseudo())) {
-        		c.set_dest(u);
-        		System.out.println("changement de destinataire" + u.get_IP());
-        	}
-            
-        }
+    	if(listUsers.getModel().getSize()!=0) {
+	        String s = (String) listUsers.getSelectedValue();
+	        
+	        for(User u : user_local.Connected_Users) {
+	        	if (s.equals(u.get_pseudo())) {
+	        		c.set_dest(u);
+	        		System.out.println("changement de destinataire" + u.get_IP());
+	        	}
+	            
+	        }
+    	}
 	}
     
 }

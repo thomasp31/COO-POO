@@ -78,19 +78,22 @@ public class server_udp extends Thread{
                     
                     packet.setData(buffBroadcast);
                     client.send(packetBroadcast);
+                    System.out.println("avant if BROADCAST ");
                     ulocal.display_List();
                 	if (ulocal.isInside(m.get_user_src().get_login())!= true) {
-                		
-                		// on rajoute l'utilisateur src du message dans la liste des utilisateurs connectés
+                		// on rajoute l'utilisateur src du m                ulocal.display_List();essage dans la liste des utilisateurs connectés
                 		
                 		ulocal.Connected_Users.add(m.get_user_src());
                 		System.out.println("mise a jour broadcast list 1");
                 		this.DLM.addElement(m.get_user_src().get_pseudo());
                 	}
+                	System.out.println("après if BROADCAST ");
+                    ulocal.display_List();
+                	
+                	
                 	//ulocal.display_List();
                     
                     System.out.println("Broadcast recu \n");
-                    
                 }else if (m.get_type().equals("REP_BROADCAST")){
                 	User user_src_RepBrdcst = m.get_user_src();
                 	System.out.println("Pseudo de la source du message reçu : " + m.get_user_src().get_pseudo());
@@ -98,31 +101,26 @@ public class server_udp extends Thread{
                 	//Conversation conv = serveur_u_source.get_conversation_by_id(m.get_id_conv());
                 	//conv.ajouter_message(m);
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
-                	ulocal.display_List();
+                	System.out.println("avant if REPBROADCAST ");
+                    ulocal.display_List();
                 	if (ulocal.isInside(m.get_user_src().get_login())!= true) {
                 		ulocal.Connected_Users.add(m.get_user_src());
                 		this.DLM.addElement(m.get_user_src().get_pseudo());
                 		System.out.println("mise a jour broadcast list 2");
                 	}
-                	//ulocal.display_List();
                 	
-                	System.out.println("Rep broadcast recu \n");
-                	
-                	
-                	
-                }
-                
-                
-                
-                //Test login a afficher
-                System.out.println("Pseudo de la source : " + m.get_user_src().get_pseudo() + "\n");
-                
-                
-                //On réinitialise la taille du datagramme, pour les futures réceptions
-                //packet.setLength(buffer.length);     
-                
-                
+                	System.out.println("Rep broadcast recu \n"); 	
+                	System.out.println("après if REPBROADCAST ");
+                    ulocal.display_List();
+                }else if (m.get_type().equals("DISCONNECT")) {
+	            	System.out.println("User disconnected : " + m.get_user_src().get_pseudo());
+	            	ulocal.Connected_Users.remove(m.get_user_src());
+	        
+	            	this.DLM.removeElement(m.get_user_src().get_pseudo());
+	            	ulocal.display_List();
+	            }
             }
+            
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {

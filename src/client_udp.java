@@ -63,7 +63,7 @@ public class client_udp extends Thread{
                 
                 //On crée notre datagramme
                 //InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
-                if (message_to_send.get_type().equals("BROADCAST")) {
+                if (message_to_send.get_type().equals("BROADCAST") || message_to_send.get_type().equals("DISCONNECT")) {
                 	System.out.println(" Envoi en broadcast \n");
                 	addr_ip_dest = "255.255.255.255";
             
