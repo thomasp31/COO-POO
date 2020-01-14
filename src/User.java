@@ -15,7 +15,7 @@ public class User implements Serializable{
 	 private static int current_ID =0;
 	 private int personnal_ID;
 	 private String pseudo; 
-	 private transient String login;
+	 private String login;
 	 private transient String state; 
 	 private int port_ecoute;
 	 public transient ArrayList<User> Connected_Users = new ArrayList<User>();
@@ -35,7 +35,7 @@ public class User implements Serializable{
 	 
 	 public void display_List() {
 		 for(User u : this.Connected_Users) {
-			 System.out.println(u.get_pseudo()+ "\n");
+			 System.out.println("List des users connectés : " + u.get_pseudo()+ "\n");
 		 }
 	 }
 	 
@@ -45,7 +45,9 @@ public class User implements Serializable{
 		 boolean result = false;
 		 if (this.Connected_Users.isEmpty()!= true) {
 			 for(User u : this.Connected_Users) {
-				 if (u.get_login().equals(l)) {
+				 System.out.println(u.get_login());
+				 
+				 if (u.get_login().equals(l)==true) {
 					 result = true;
 				 }
 			 }

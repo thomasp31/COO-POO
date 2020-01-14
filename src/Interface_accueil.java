@@ -138,7 +138,7 @@ public class Interface_accueil {
         
         updateBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
-        		listUsers.removeAll();
+        		//listUsers.removeAll();
         		Message message_broadcast = new Message("BROADCAST",user_local, null, 0);
         		message_broadcast.set_data("Automatique");
         		client1.set_message(message_broadcast);
