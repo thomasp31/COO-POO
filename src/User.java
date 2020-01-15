@@ -130,8 +130,7 @@ public class User implements Serializable{
 	        }
 		 return local_ip_address;
 	 }
-	 
-	 
+	  
 	 //permet d'ajouter une conversation a la liste des conversations actives de l'user
 	 public void ajouter_conversation(Conversation c) {
 		 
@@ -163,5 +162,17 @@ public class User implements Serializable{
 		 
 		 
 	 }
+	 
+	  //égalité des deux users si leur logins et pseudos sont égaux
+	  public boolean equals(User user) {
+		  return (this.pseudo.equals(user.get_pseudo())&&this.login.equals(user.get_login()));
+	  }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	 
 }
