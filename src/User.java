@@ -67,6 +67,23 @@ public class User implements Serializable{
 		 return result;
 	 }
 	 
+	 public int index_of(User user) {
+		 int index = 0;
+		 int res=0;
+		 if (this.Connected_Users.isEmpty()==false) {
+			 for (User u : this.Connected_Users) {
+				 if (u.get_id() == user.get_id()) {
+					 res = index;
+				 }
+				 index ++;
+			 }
+		 }
+		 return res;
+	 }
+	 
+	 
+	 
+	 
 	 public int get_port_ecoute() {
 		 return this.port_ecoute;
 	 }
