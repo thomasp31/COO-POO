@@ -124,7 +124,7 @@ public class Interface_accueil {
         
         //Initialisation du serveur et du client
         
-        server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model);
+        server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model, listUsers);
         client_udp client1 = new client_udp(user_local.get_port_ecoute(),user_local/*,user_dest*/); //Peut-être mettre le port d'envoi en attribut à User
         client1.Send_Broadcast();
         
@@ -161,7 +161,6 @@ public class Interface_accueil {
 			public void valueChanged(ListSelectionEvent e) {
 				jList1ValueChanged(e,listUsers,client1);
 				textAreaMessage.setText(null);
-				listUsers.clearSelection();
 			}
         });
         

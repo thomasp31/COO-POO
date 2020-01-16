@@ -9,15 +9,17 @@ public class server_udp extends Thread{
     public int port_local;
     public User ulocal;
     public JTextArea display_zone;
+    public JList JLUsers;
     //public JList<User> Connected_Users = new JList<User>();
     public DefaultListModel DLM; //permet de relier au model dans INterface_Accueil
     
-    public server_udp(int init_p_local,User init_u_source, JTextArea jta, DefaultListModel model){
+    public server_udp(int init_p_local,User init_u_source, JTextArea jta, DefaultListModel model, JList JL){
         this.port_local= init_p_local;
         this.ulocal = init_u_source; 
         this.display_zone = jta;
         //this.Connected_Users=Jl;
         this.DLM=model;
+        this.JLUsers=JL;
         start();
     }
 
@@ -117,7 +119,8 @@ public class server_udp extends Thread{
                 }else if (m.get_type().equals("DISCONNECT")) {
 	            	System.out.println("User disconnected : " + m.get_user_src().get_pseudo());
 	            	//ulocal.display_List();
-	            
+	            	//JLUsers.clearSelection();
+	            	JLUsers.setSelectedIndex(0);
 	            	ulocal.Connected_Users.remove(m.get_user_src());
 	        
 	            	this.DLM.removeElement(m.get_user_src().get_pseudo());
