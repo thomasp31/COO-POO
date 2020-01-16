@@ -58,9 +58,12 @@ public class server_udp extends Thread{
                 
                 
                 if (m.get_type().equals("NORMAL")) {
+                	
+                	//System.out.println("Selected user : " + selected_user.get_login() + "\n");
                 	if (selected_user.get_login().equals(m.get_user_dst().get_login())){
                     	display_zone.append("Message reçu : " + m.get_data() + "\n");
                     	display_zone.append(m.get_date() + "\n");
+                    	
                     	
                 	}
                 	User user_dest = m.get_user_dst();

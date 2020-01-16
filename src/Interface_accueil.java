@@ -169,7 +169,7 @@ public class Interface_accueil {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				jList1ValueChanged(e,listUsers,client1);
+				jList1ValueChanged(e,listUsers,client1,server);
 				String hist="";
 				try {
 					hist = CDBI.get_historique(u_local, selected_user);
@@ -202,14 +202,15 @@ public class Interface_accueil {
         });
     } 
     
-    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,client_udp c) {
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,client_udp c, server_udp s) {
         //set text on right here
     	if(listUsers.getModel().getSize()!=0) {
-	        String s = (String) listUsers.getSelectedValue();
+	        String str = (String) listUsers.getSelectedValue();
 	        
 	        for(User u : user_local.Connected_Users) {
-	        	if (s.equals(u.get_pseudo())) {
+	        	if (str.equals(u.get_pseudo())) {
 	        		selected_user=u;
+	        		s.selected_user=u;
 	        		c.set_dest(u);
 	        		System.out.println("changement de destinataire" + u.get_IP());
 	        	}
