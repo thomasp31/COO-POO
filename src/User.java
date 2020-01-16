@@ -12,25 +12,25 @@ import javax.swing.JList;
 public class User implements Serializable{
 	
 	 private static  final  long serialVersionUID =  1L;
-	 private static int current_ID =0;
 	 private int personnal_ID;
 	 private String pseudo; 
 	 private String login;
 	 private transient String state; 
 	 private int port_ecoute;
+	 private int port_envoi;
 	 public transient ArrayList<User> Connected_Users = new ArrayList<User>();
 	 private String ip_addr;
 	 private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
 	 
 	 
 	 
-	 public User(String init_pseudo,String init_login,String init_state, int init_port_ecoute) {
-		 current_ID++;
-		 this.personnal_ID=current_ID;
+	 public User(String init_pseudo,String init_login,String init_state, int init_port_ecoute,int init_port_envoi, int init_ID) {
+		 this.personnal_ID=init_ID;
 		 this.pseudo= init_pseudo;
 		 this.login=init_login;
 		 this.ip_addr = this.get_local_ip();
 		 this.port_ecoute=init_port_ecoute;
+		 this.port_envoi=init_port_envoi;
 	 }
 	 
 	 public void display_List() {
@@ -59,7 +59,7 @@ public class User implements Serializable{
 		 boolean result = false;
 		 if (this.Connected_Users.isEmpty()!= true) {
 			 for(User user : this.Connected_Users) {
-				 if (user==u) {
+				 if (user.get_pseudo().equals(u.get_pseudo())) {
 					 this.Connected_Users.remove(user);
 				 }
 			 }
@@ -162,17 +162,12 @@ public class User implements Serializable{
 		 
 		 
 	 }
-	 
-	  //égalité des deux users si leur logins et pseudos sont égaux
-	  public boolean equals(User user) {
-		  return (this.pseudo.equals(user.get_pseudo())&&this.login.equals(user.get_login()));
-	  }
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
+
+	public int get_port_envoi() {
+		return port_envoi;
+	}
+
+	public void set_port_envoi(int port_envoi) {
+		this.port_envoi = port_envoi;
+	}
 }

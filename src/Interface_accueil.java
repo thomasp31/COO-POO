@@ -33,22 +33,22 @@ import java.awt.Scrollbar;
 
 public class Interface_accueil {
     
-	public int port_src;
-	public int port_dest;
+	//public int port_src;
+	//public int port_dest;
 	public User user_local;
-	public User user_dest;// A changer quand on aura plusieurs utilisateurs
+	//public User user_dest;// A changer quand on aura plusieurs utilisateurs
 	public JTextArea textAreaMessage;
 	public JTextField inputMessage;
 	
-    public Interface_accueil(String l, int init_port_src, int init_port_dest, User u_local, User u_dest){
+    public Interface_accueil(String l, User u_local/*, User u_dest*//*, int init_port_src, int init_port_dest*/){ 
     	
-    	port_src = init_port_src;
-    	port_dest = init_port_dest;
+    	//port_src = init_port_src;
+    	//port_dest = init_port_dest;
     	user_local = u_local;
-    	user_dest = u_dest;
+    	//user_dest = u_dest;
     	
     	JFrame f=new JFrame("my chat");
-        f.setSize(800,800);        
+        f.setSize(400,400);        
         
         /*Définition des Panel*/
         
@@ -87,10 +87,11 @@ public class Interface_accueil {
 		
         
         textAreaMessage = new JTextArea();
-        JScrollPane scroll = new JScrollPane(textAreaMessage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane scroll = new JScrollPane(textAreaMessage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         //conversationPanel.add(textAreaMessage,BorderLayout.CENTER);
         conversationPanel.add(scroll, BorderLayout.CENTER);
         textAreaMessage.setEditable(false);
+        textAreaMessage.setLineWrap(true);
         
         inputMessage = new JTextField();
         envoiMessage.add(inputMessage,BorderLayout.CENTER);
@@ -119,24 +120,26 @@ public class Interface_accueil {
         
         f.setContentPane(mainPanel);
         f.setVisible(true);                           
-        
+        conversationPanel.getRootPane().setDefaultButton(sendButton); //Fait réagir le bouton "submit" lors du click sur le bouton ENTREE
         
         //Initialisation du serveur et du client
         
-        server_udp server = new server_udp(port_src, user_local, textAreaMessage, model);
-        client_udp client1 = new client_udp(port_dest,user_local,user_dest);
+        server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model);
+        client_udp client1 = new client_udp(user_local.get_port_ecoute(),user_local/*,user_dest*/); //Peut-être mettre le port d'envoi en attribut à User
         
         sendButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
-        		String s = inputMessage.getText();
-        		Message m = new Message("NORMAL", user_local, user_dest, 0 );
-        		m.set_data(s);
-        		m.set_date();
-        		textAreaMessage.append("Message envoyé : " + s + "\n");
-        		textAreaMessage.append(m.get_date() + "\n");
-        		client1.set_message(m);
-        		client1.run();
-        		inputMessage.setText("");
+        		if(client1.get_dest()!=null) {
+	        		String s = inputMessage.getText();
+	        		Message m = new Message("NORMAL", user_local, client1.get_dest(), 0 );
+	        		m.set_data(s);
+	        		m.set_date();
+	        		textAreaMessage.append("Message envoyé : " + s + "\n");
+	        		textAreaMessage.append(m.get_date() + "\n");
+	        		client1.set_message(m);
+	        		client1.run();
+	        		inputMessage.setText("");
+        		}
         	}
         });
         
@@ -147,7 +150,6 @@ public class Interface_accueil {
         		message_broadcast.set_data("Automatique");
         		client1.set_message(message_broadcast);
         		client1.run();
-        		
         	}
         	
         });

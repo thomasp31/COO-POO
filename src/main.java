@@ -10,22 +10,22 @@ public class main{
 
     public static void main(String args[]){
     	
-    	User Pierre = new User("Pierrot","pcloury","BG",0);
-    	User Thomas = new User("Toto","tpelous","Ultra-BG",0);
-    	User Jack =new User("Ja","Jack","u",0);
-    	Conversation convpierre = new Conversation(0,Thomas,Pierre);
-    	Thomas.ajouter_conversation(convpierre);
+    	//User Pierre = new User("Pierrot","pcloury","BG",0);
+    	//User Thomas = new User("Toto","tpelous","Ultra-BG",0);
+    	//User Jack =new User("Ja","Jack","u",0);
+    	//Conversation convpierre = new Conversation(0,Thomas,Pierre);
+    	//Thomas.ajouter_conversation(convpierre);
         
-    	int port_ecoute = Integer.parseInt(args[0]);
-        int port_dest = Integer.parseInt(args[1]);
-        
+    	//int port_ecoute = Integer.parseInt(args[0]);
+        //int port_dest = Integer.parseInt(args[1]);
+        //int port_dest=1998;
         //server_udp server = new server_udp(port_server,Thomas);
         
         //Les 2 if ne sont plus forcément indispensables, ils sont la juste parce que je n'ai pas encore réfléchi au moyen de mettre Pierre 
         //ou Thomas en user dest ou local dans mon code de connexion 
         
-        if (Integer.parseInt(args[2]) == Pierre.get_id()) {
-	        Pierre.set_port_ecoute(port_ecoute);
+        /*if (Integer.parseInt(args[2]) == Pierre.get_id()) {
+	        //Pierre.set_port_ecoute(port_ecoute);
 	        Connection_Interface CF = new Connection_Interface(port_ecoute,port_dest,Pierre,Thomas);
 	        //Interface_accueil I = new Interface_accueil("PIERRE", port_ecoute,port_dest,Pierre,Thomas);
         	//server_udp server = new server_udp(port_ecoute,Pierre);
@@ -56,7 +56,9 @@ public class main{
         if (Integer.parseInt(args[2])== Jack.get_id()){
         	Jack.set_port_ecoute(port_ecoute);
         	Connection_Interface CF = new Connection_Interface(port_ecoute,port_dest,Jack,Pierre);
-        }
+        }*/
+    	
+    	Connection_Interface CF = new Connection_Interface();
         
         
     }

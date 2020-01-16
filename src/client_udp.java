@@ -13,11 +13,10 @@ public class client_udp extends Thread{
     private String addr_ip_dest="";
     private Message message_to_send;
 
-    public client_udp(int init_port_dest,User init_user_src,User init_user_dest){
+    public client_udp(int init_port_dest,User init_user_src/*,User init_user_dest*/){
         this.port_dest = init_port_dest;
         this.user_src = init_user_src;
-        this.user_dest = init_user_dest;
-        
+        this.user_dest = null;
         //start();
     }
 
@@ -64,7 +63,7 @@ public class client_udp extends Thread{
                 //On crée notre datagramme
                 //InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
                 if (message_to_send.get_type().equals("BROADCAST") || message_to_send.get_type().equals("DISCONNECT")) {
-                	System.out.println(" Envoi en broadcast \n");
+                	System.out.println("Envoi en broadcast \n");
                 	addr_ip_dest = "255.255.255.255";
             
                 }else if (message_to_send.get_type().equals("NORMAL")) {
@@ -78,9 +77,11 @@ public class client_udp extends Thread{
                 //On lui affecte les données à envoyer
                 packet.setData(buff);
                 
-                //On envoie au serveur
+                //On envoie au serveur si le destinataire à bien été set
+                //if(this.get_dest() != null) {
+                //SI LE CLIENT EST NULL, ON LE GÈRE COTÉ INTERFACE_ACCUEIL
                 client.send(packet);
-                
+                //}
                 
                 
                 System.out.println("DONE SENDING \n");
@@ -101,9 +102,12 @@ public class client_udp extends Thread{
     	this.user_dest = U;
     	this.addr_ip_dest = U.get_IP();
     }
+    
+    public User get_dest() {
+    	return this.user_dest;
+    }
 
     public void set_message(Message m) {
     	this.message_to_send=m;
     }
-    
 }

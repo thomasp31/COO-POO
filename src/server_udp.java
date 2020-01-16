@@ -64,36 +64,38 @@ public class server_udp extends Thread{
                 	
                 }else if (m.get_type().equals("BROADCAST")){
                 	//user_src du message reçu correspond au destinataire du message a renvoyer
-                	
-                	Message mes_reponse = new Message("REP_BROADCAST",ulocal,m.get_user_src(),0);
-                	mes_reponse.set_data("Automatique");
-                	ByteArrayOutputStream baosBroadcast = new ByteArrayOutputStream();
-                    ObjectOutputStream oosBroadcast = new ObjectOutputStream(baosBroadcast);
-                    oosBroadcast.writeObject(mes_reponse);
-                    byte[] buffBroadcast = baosBroadcast.toByteArray();
-                    DatagramSocket client = new DatagramSocket();
-                    InetAddress adresse = InetAddress.getByName(m.get_user_src().get_IP());
-                    DatagramPacket packetBroadcast = new DatagramPacket(buffBroadcast, buffBroadcast.length, adresse, m.get_user_src().get_port_ecoute());
-                    
-                    
-                    packet.setData(buffBroadcast);
-                    client.send(packetBroadcast);
-                    System.out.println("avant if BROADCAST ");
-                    ulocal.display_List();
-                	if (ulocal.isInside(m.get_user_src().get_login())!= true) {
-                		// on rajoute l'utilisateur src du m                ulocal.display_List();essage dans la liste des utilisateurs connectés
-                		
-                		ulocal.Connected_Users.add(m.get_user_src());
-                		System.out.println("mise a jour broadcast list 1");
-                		this.DLM.addElement(m.get_user_src().get_pseudo());
+                	if(m.get_user_src().get_login()!=ulocal.get_login()) {
+	                	System.out.println("avant if BROADCAST ");
+	                	Message mes_reponse = new Message("REP_BROADCAST",ulocal,m.get_user_src(),0);
+	                	mes_reponse.set_data("Automatique");
+	                	ByteArrayOutputStream baosBroadcast = new ByteArrayOutputStream();
+	                    ObjectOutputStream oosBroadcast = new ObjectOutputStream(baosBroadcast);
+	                    oosBroadcast.writeObject(mes_reponse);
+	                    byte[] buffBroadcast = baosBroadcast.toByteArray();
+	                    DatagramSocket client = new DatagramSocket();
+	                    InetAddress adresse = InetAddress.getByName(m.get_user_src().get_IP());
+	                    DatagramPacket packetBroadcast = new DatagramPacket(buffBroadcast, buffBroadcast.length, adresse, m.get_user_src().get_port_ecoute());
+	                    
+	                    
+	                    packet.setData(buffBroadcast);
+	                    client.send(packetBroadcast);
+	                    System.out.println("avant if BROADCAST ");
+	                    ulocal.display_List();
+	                	if (ulocal.isInside(m.get_user_src().get_login())!= true && m.get_user_src().get_login()!=ulocal.get_login()) {
+	                		// on rajoute l'utilisateur src du message dans la liste des utilisateurs connectés
+	                		
+	                		ulocal.Connected_Users.add(m.get_user_src());
+	                		System.out.println("mise a jour broadcast list 1");
+	                		this.DLM.addElement(m.get_user_src().get_pseudo());
+	                	}
+	                	System.out.println("après if BROADCAST ");
+	                    ulocal.display_List();
                 	}
-                	System.out.println("après if BROADCAST ");
-                    ulocal.display_List();
-                	
                 	
                 	//ulocal.display_List();
                     
                     System.out.println("Broadcast recu \n");
+                    
                 }else if (m.get_type().equals("REP_BROADCAST")){
                 	User user_src_RepBrdcst = m.get_user_src();
                 	System.out.println("Pseudo de la source du message reçu : " + m.get_user_src().get_pseudo());
@@ -103,7 +105,7 @@ public class server_udp extends Thread{
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
                 	System.out.println("avant if REPBROADCAST ");
                     ulocal.display_List();
-                	if (ulocal.isInside(m.get_user_src().get_login())!= true) {
+                	if (ulocal.isInside(m.get_user_src().get_login())!= true && m.get_user_src().get_login()!=ulocal.get_login()) {
                 		ulocal.Connected_Users.add(m.get_user_src());
                 		this.DLM.addElement(m.get_user_src().get_pseudo());
                 		System.out.println("mise a jour broadcast list 2");
@@ -114,6 +116,12 @@ public class server_udp extends Thread{
                     ulocal.display_List();
                 }else if (m.get_type().equals("DISCONNECT")) {
 	            	System.out.println("User disconnected : " + m.get_user_src().get_pseudo());
+	            	
+	            	
+	            	
+	            	
+	            	//ulocal.display_List();
+	            
 	            	ulocal.Connected_Users.remove(m.get_user_src());
 	        
 	            	this.DLM.removeElement(m.get_user_src().get_pseudo());
