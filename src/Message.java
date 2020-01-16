@@ -26,7 +26,7 @@ public class Message implements Serializable{
 		this.user_dest = init_user_dest;
 		this.type = init_type;
 		this.id_conv = init_id_conv;
-		DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.Stringdate = format.format(new Date());
 	}
 	
@@ -58,7 +58,7 @@ public class Message implements Serializable{
 	}
 	
 	public void set_date() {
-		DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.Stringdate = format.format(new Date());
 	}
 }

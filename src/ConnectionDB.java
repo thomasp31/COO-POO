@@ -39,6 +39,11 @@ public class ConnectionDB {
 		return res;
 	}
 	
+	
+	// fonction permettant de créer une instance de la classe User en fonction du login passée en paramètre (la fonction va chercher les attributs dans la base
+	// de donnée et crée l'user correspondant
+	
+	
 	public User Create_User(String log) throws SQLException {
 		String sql="select * from Users where login=\"" + log + "\";";
 		Statement smt = con.createStatement();
@@ -54,5 +59,45 @@ public class ConnectionDB {
 		System.out.println("IP USER LOCAL : " + User_ret.get_IP());
 		return User_ret;
 	}
+	
+	
+	//méthode permettant d'insérer le message dans la base de donnée
+	
+	
+	public boolean Insert_messBDD(Message message) throws SQLException {
+		int id_src = message.get_user_src().get_id();
+		int id_dest = message.get_user_dst().get_id();
+		String type = message.get_type();
+		String data = message.get_data();
+		String date = message.get_date();
+		String sql="INSERT INTO Messages (id_user, id_dest, type, data, date_message) VALUES ("  + id_src + ", " + id_dest + ", \"" + type + "\", \"" + data + "\", " +"\""+ date + "\");";
+		Statement smt = con.createStatement();
+		smt.executeUpdate(sql);
+		return true;
+	}
+	
+	//methode permettant de charger l'historique de la conversation entre le user local et le user dest_dest
+	
+	public String get_historique(User user_local, User user_dest) throws SQLException {
+		
+		String resultat ="";
+		String sql="select * from Messages where (id_user = "  + user_local.get_id() + " and id_dest = " + user_dest.get_id() + ") OR (id_user = "  + user_dest.get_id() + " and id_dest = " + user_local.get_id() + ");";
+		Statement smt = con.createStatement();
+		ResultSet rs = smt.executeQuery(sql);
+		while (rs.next()) {
+			String data = rs.getString("data");
+			String date = rs.getString("date_message");
+			if(rs.getString("id_user").equals(user_local.get_id())) {
+				resultat = resultat + "Message envoyé : " + data + "\n" + date + "\n";
+			}else {
+				resultat = resultat + "Message reçu : " + data + "\n" + date+ "\n";
+			}
+		}
+		return resultat;
+	}
+	
+	
+	
+	
 	
 }

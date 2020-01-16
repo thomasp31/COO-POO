@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -39,7 +40,8 @@ public class Interface_accueil {
 	//public User user_dest;// A changer quand on aura plusieurs utilisateurs
 	public JTextArea textAreaMessage;
 	public JTextField inputMessage;
-	
+	public ConnectionDB CDBI = new ConnectionDB();
+	public User selected_user;
     public Interface_accueil(String l, User u_local/*, User u_dest*//*, int init_port_src, int init_port_dest*/){ 
     	
     	//port_src = init_port_src;
@@ -124,7 +126,7 @@ public class Interface_accueil {
         
         //Initialisation du serveur et du client
         
-        server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model, listUsers);
+        server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model, listUsers, selected_user);
         client_udp client1 = new client_udp(user_local.get_port_ecoute(),user_local/*,user_dest*/); //Peut-être mettre le port d'envoi en attribut à User
         client1.Send_Broadcast();
         
@@ -135,10 +137,18 @@ public class Interface_accueil {
 	        		Message m = new Message("NORMAL", user_local, client1.get_dest(), 0 );
 	        		m.set_data(s);
 	        		m.set_date();
+	        		
 	        		textAreaMessage.append("Message envoyé : " + s + "\n");
 	        		textAreaMessage.append(m.get_date() + "\n");
 	        		client1.set_message(m);
 	        		client1.run();
+	        		System.out.println("Envoi du message à la base de donnée \n");
+	        		try {
+						CDBI.Insert_messBDD(m);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 	        		inputMessage.setText("");
         		}
         	}
@@ -160,7 +170,14 @@ public class Interface_accueil {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				jList1ValueChanged(e,listUsers,client1);
-				textAreaMessage.setText(null);
+				String hist="";
+				try {
+					hist = CDBI.get_historique(u_local, selected_user);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				textAreaMessage.setText(hist);
 			}
         });
         
@@ -192,6 +209,7 @@ public class Interface_accueil {
 	        
 	        for(User u : user_local.Connected_Users) {
 	        	if (s.equals(u.get_pseudo())) {
+	        		selected_user=u;
 	        		c.set_dest(u);
 	        		System.out.println("changement de destinataire" + u.get_IP());
 	        	}

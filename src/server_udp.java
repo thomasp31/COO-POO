@@ -12,15 +12,18 @@ public class server_udp extends Thread{
     public JList JLUsers;
     //public JList<User> Connected_Users = new JList<User>();
     public DefaultListModel DLM; //permet de relier au model dans INterface_Accueil
+    public User selected_user;
     
-    public server_udp(int init_p_local,User init_u_source, JTextArea jta, DefaultListModel model, JList JL){
+    public server_udp(int init_p_local,User init_u_source, JTextArea jta, DefaultListModel model, JList JL, User init_selected_user){
         this.port_local= init_p_local;
         this.ulocal = init_u_source; 
         this.display_zone = jta;
         //this.Connected_Users=Jl;
         this.DLM=model;
         this.JLUsers=JL;
+        this.selected_user = init_selected_user;
         start();
+        
     }
 
     public void run(){
@@ -55,12 +58,15 @@ public class server_udp extends Thread{
                 
                 
                 if (m.get_type().equals("NORMAL")) {
-                	display_zone.append("Message reçu : " + m.get_data() + "\n");
-                	display_zone.append(m.get_date() + "\n");
+                	if (selected_user.get_login().equals(m.get_user_dst().get_login())){
+                    	display_zone.append("Message reçu : " + m.get_data() + "\n");
+                    	display_zone.append(m.get_date() + "\n");
+                    	
+                	}
                 	User user_dest = m.get_user_dst();
                 	//System.out.println("Pseudo du destinataire: " + m.get_user_dst().get_pseudo());
-                	Conversation conv = ulocal.get_conversation_by_id(m.get_id_conv());
-                	conv.ajouter_message(m);
+                	//Conversation conv = ulocal.get_conversation_by_id(m.get_id_conv());
+                	//conv.ajouter_message(m);
                 	//System.out.println("ID de la conversation : " + conv.get_id_conv());
                 	//System.out.println("Date de l'envoi du message : " + m.get_date());
                 	
