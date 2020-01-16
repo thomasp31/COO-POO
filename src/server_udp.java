@@ -116,10 +116,6 @@ public class server_udp extends Thread{
                     ulocal.display_List();
                 }else if (m.get_type().equals("DISCONNECT")) {
 	            	System.out.println("User disconnected : " + m.get_user_src().get_pseudo());
-	            	
-	            	
-	            	
-	            	
 	            	//ulocal.display_List();
 	            
 	            	ulocal.Connected_Users.remove(m.get_user_src());

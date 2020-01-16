@@ -161,6 +161,7 @@ public class Interface_accueil {
 			public void valueChanged(ListSelectionEvent e) {
 				jList1ValueChanged(e,listUsers,client1);
 				textAreaMessage.setText(null);
+				listUsers.clearSelection();
 			}
         });
         
@@ -175,6 +176,7 @@ public class Interface_accueil {
             		client1.set_message(message_deco);
             		client1.run();
         			f.dispose();
+        			server.stop();
         		}	
         		else {
         			f.setVisible(true);
