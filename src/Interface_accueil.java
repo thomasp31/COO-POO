@@ -125,7 +125,7 @@ public class Interface_accueil {
         conversationPanel.getRootPane().setDefaultButton(sendButton); //Fait réagir le bouton "submit" lors du click sur le bouton ENTREE
         
         //Initialisation du serveur et du client
-        
+        //faire if dans le serveur pour vérifier que selected user n'est pas nul
         server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model, listUsers, selected_user);
         client_udp client1 = new client_udp(user_local.get_port_ecoute(),user_local/*,user_dest*/); //Peut-être mettre le port d'envoi en attribut à User
         client1.Send_Broadcast();
@@ -139,7 +139,7 @@ public class Interface_accueil {
 	        		m.set_date();
 	        		
 	        		textAreaMessage.append("Message envoyé : " + s + "\n");
-	        		textAreaMessage.append(m.get_date() + "\n");
+	        		textAreaMessage.append(m.get_date() + "\n\n");
 	        		client1.set_message(m);
 	        		client1.run();
 	        		System.out.println("Envoi du message à la base de donnée \n");

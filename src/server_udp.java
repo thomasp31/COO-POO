@@ -62,7 +62,7 @@ public class server_udp extends Thread{
                 	System.out.println("selected user");
                 	if (selected_user.get_login().equals(m.get_user_src().get_login())){
                     	display_zone.append("Message reçu : " + m.get_data() + "\n");
-                    	display_zone.append(m.get_date() + "\n");
+                    	display_zone.append(m.get_date() + "\n \n");
                     	
                     	
                 	}
@@ -125,12 +125,17 @@ public class server_udp extends Thread{
                 	System.out.println("Rep broadcast recu \n"); 	
                 	System.out.println("après if REPBROADCAST ");
                     ulocal.display_List();
+                    
+                    
                 }else if (m.get_type().equals("DISCONNECT")) {
 	            	System.out.println("User disconnected : " + m.get_user_src().get_pseudo());
 	            	//ulocal.display_List();
 	            	//JLUsers.clearSelection();
 	            	JLUsers.setSelectedIndex(0);
-	            	ulocal.Connected_Users.remove(m.get_user_src());
+	            	int i = ulocal.index_of(m.get_user_src());
+	            	System.out.println("index : " + i);
+	            	ulocal.Connected_Users.remove(i);
+	            	//ulocal.Connected_Users.remove(m.get_user_src());
 	        
 	            	this.DLM.removeElement(m.get_user_src().get_pseudo());
 	            	ulocal.display_List();

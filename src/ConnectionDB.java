@@ -88,9 +88,9 @@ public class ConnectionDB {
 			String data = rs.getString("data");
 			String date = rs.getString("date_message");
 			if(Integer.parseInt(rs.getString("id_user"))==user_local.get_id()) {
-				resultat = resultat + "Message envoyé : " + data + "\n" + date + "\n";
+				resultat = resultat + "Message envoyé : " + data + "\n" + date + "\n \n";
 			}else {
-				resultat = resultat + "Message reçu : " + data + "\n" + date+ "\n";
+				resultat = resultat + "Message reçu : " + data + "\n" + date+ "\n \n";
 			}
 		}
 		return resultat;
