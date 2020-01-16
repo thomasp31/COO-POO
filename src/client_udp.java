@@ -98,6 +98,13 @@ public class client_udp extends Thread{
         
     }      
     
+    public void Send_Broadcast() {
+    	Message message_broadcast = new Message("BROADCAST",this.user_src, null, 0);
+		message_broadcast.set_data("Automatique");
+		this.set_message(message_broadcast);
+		this.run();
+    }
+    
     public void set_dest(User U) {
     	this.user_dest = U;
     	this.addr_ip_dest = U.get_IP();

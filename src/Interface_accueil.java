@@ -126,6 +126,7 @@ public class Interface_accueil {
         
         server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model);
         client_udp client1 = new client_udp(user_local.get_port_ecoute(),user_local/*,user_dest*/); //Peut-être mettre le port d'envoi en attribut à User
+        client1.Send_Broadcast();
         
         sendButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
