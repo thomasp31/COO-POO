@@ -110,7 +110,14 @@ public class ConnectionDB {
 		return res;
 	}
 	
-	
-	
-	
+	//Fonction envoyant la modification de pseudo a la BDD en renvoyant true si OK et False I echec
+	public void Update_Pseudo(String NP, User U) {	
+		try {
+			String sql="UPDATE Users SET pseudo=\""+ NP + "\" WHERE login=\"" + U.get_login() + "\";";
+			Statement smt = con.createStatement();
+			smt.executeUpdate(sql);
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+		}
+	}
 }

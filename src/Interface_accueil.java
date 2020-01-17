@@ -70,7 +70,7 @@ public class Interface_accueil {
         filePanel.setLayout(new BorderLayout());
         
         /*********************************************************************/
-        JButton updateBtn = new JButton("UPDATE");
+        JButton updateBtn = new JButton(u_local.get_pseudo());
         userPanel.add(updateBtn,BorderLayout.NORTH);
         
         DefaultListModel model = new DefaultListModel();

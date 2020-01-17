@@ -38,7 +38,7 @@ public class Change_Pseudo_Window extends JFrame implements ActionListener{
         pseudo_label.setText("User Pseudo : " + this.user_to_change.get_pseudo());
         userPseudo_text = new JTextField();
         
-        submit = new JButton("SUBMIT");
+        submit = new JButton("CHANGE");
         
         mainPanel.add(pseudo_label);
         mainPanel.add(userPseudo_text);
@@ -69,7 +69,9 @@ public class Change_Pseudo_Window extends JFrame implements ActionListener{
 				message_erreur.setText("Pseudo OK");
 				user_to_change.set_pseudo(inputPseudo);
 				C.Send_Update_Pseudo(user_to_change);
+				CDB2.Update_Pseudo(inputPseudo, user_to_change);
 				this.dispose();
+				
 			}else {
 				message_erreur.setText("Pseudo déjà pris");
 			}
