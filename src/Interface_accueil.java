@@ -70,7 +70,7 @@ public class Interface_accueil {
         filePanel.setLayout(new BorderLayout());
         
         /*********************************************************************/
-        JButton updateBtn = new JButton(u_local.get_pseudo());
+        JButton updateBtn = new JButton("Pseudo");
         userPanel.add(updateBtn,BorderLayout.NORTH);
         
         DefaultListModel model = new DefaultListModel();
@@ -98,6 +98,8 @@ public class Interface_accueil {
         conversationPanel.add(scroll, BorderLayout.CENTER);
         textAreaMessage.setEditable(false);
         textAreaMessage.setLineWrap(true);
+        textAreaMessage.setDragEnabled(true);
+  
         
         inputMessage = new JTextField();
         envoiMessage.add(inputMessage,BorderLayout.CENTER);
