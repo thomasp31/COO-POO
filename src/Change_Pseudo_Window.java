@@ -65,7 +65,7 @@ public class Change_Pseudo_Window extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		String inputPseudo = userPseudo_text.getText();
 		try {
-			if(CDB2.check_new_pseudo(inputPseudo, user_to_change)) {
+			if(CDB2.check_new_pseudo(inputPseudo)) {
 				message_erreur.setText("Pseudo OK");
 				user_to_change.set_pseudo(inputPseudo);
 				C.Send_Update_Pseudo(user_to_change);

@@ -84,11 +84,18 @@ public class Connection_Interface extends JFrame implements ActionListener {
         User user_local;
         try {
 			if(CDB.Connection_Users(userName, password)) {
-				user_local = CDB.Create_User(userName);
-				//Interface_accueil I = new Interface_accueil(user_local.get_pseudo() + " Interface", user_local.get_port_ecoute(),1998,user_local,user_dest);
-				Interface_accueil I = new Interface_accueil(user_local.get_pseudo() + " Interface",user_local);
-				this.dispose();
-			}/*
+				if (!userName.equals("Admin")) {
+					user_local = CDB.Create_User(userName);
+					//Interface_accueil I = new Interface_accueil(user_local.get_pseudo() + " Interface", user_local.get_port_ecoute(),1998,user_local,user_dest);
+					Interface_accueil I = new Interface_accueil(user_local.get_pseudo() + " Interface",user_local);
+					this.dispose();
+				}else{
+					System.out.println("user Name : Admin");
+					Admin_Interface AI = new Admin_Interface();
+					this.dispose();
+				}
+			}
+			/*
 			if (userName.trim().equals("Thomas") && password.trim().equals("Thomas")) {
 				Interface_accueil I = new Interface_accueil("Thomas", port_src,port_dest,user_local,user_dest);
 				this.dispose();
