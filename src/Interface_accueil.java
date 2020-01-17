@@ -73,9 +73,11 @@ public class Interface_accueil {
         JButton updateBtn = new JButton("Pseudo");
         userPanel.add(updateBtn,BorderLayout.NORTH);
         
+        JScrollPane JSPList = new JScrollPane();
         DefaultListModel model = new DefaultListModel();
         JList listUsers = new JList(model);
 		listUsers.setBackground(Color.cyan);
+		JSPList.setViewportView(listUsers);
 		/*listUsers.setModel(new AbstractListModel() {
 			String[] values = new String[] {"USER 1", "USER 2", "USER 3", "USER 4"};
 			public int getSize() {
@@ -85,7 +87,7 @@ public class Interface_accueil {
 				return values[index];
 			}
 		});*/
-		userPanel.add(listUsers);
+		userPanel.add(JSPList);
 		
 		//Pour plus tard si on a le temps pour différencier les envois
 		//JTextPane textPaneMessage = new JTextPane();

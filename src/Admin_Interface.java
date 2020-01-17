@@ -50,7 +50,7 @@ public class Admin_Interface {
         JList listUsersAdmin = new JList(modelUsers);
         JSP.setViewportView(listUsersAdmin);
         //listUsersPanel.add(listUsersAdmin);
-        listUsersPanel.add(JSP);
+        //listUsersPanel.add(JSP); // remplacé par ligne 90
         
         JTextField createLogin_text = new JTextField();
         JTextField createPassword_text = new JTextField();
@@ -87,7 +87,8 @@ public class Admin_Interface {
     
         modifUserPanel.add(disableUserPanel,BorderLayout.CENTER);
         
-        mainAdminPanel.add(listUsersPanel,BorderLayout.WEST);
+        //mainAdminPanel.add(listUsersPanel,BorderLayout.WEST); remplacé par ligne 90
+        mainAdminPanel.add(JSP,BorderLayout.WEST);
         mainAdminPanel.add(modifUserPanel,BorderLayout.CENTER);
         
         f.setContentPane(mainAdminPanel);
