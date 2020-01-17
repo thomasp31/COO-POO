@@ -105,6 +105,13 @@ public class client_udp extends Thread{
 		this.run();
     }
     
+    public void Send_Update_Pseudo(User U_src) {
+    	Message message_broadcast = new Message("UPDATE",U_src, null, 0);
+		message_broadcast.set_data("Changement Pseudo");
+		this.set_message(message_broadcast);
+		this.run();
+    }
+    
     public void set_dest(User U) {
     	this.user_dest = U;
     	this.addr_ip_dest = U.get_IP();

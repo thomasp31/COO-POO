@@ -127,6 +127,13 @@ public class server_udp extends Thread{
                     ulocal.display_List();
                     
                     
+                }else if(m.get_type().equals("UPDATE")) {
+                	int index_connected_user = ulocal.index_of(m.get_user_src());
+                	int index_model = DLM.indexOf(ulocal.Connected_Users.get(index_connected_user).get_pseudo());
+                	DLM.set(index_model,m.get_user_src().get_pseudo());
+                	ulocal.Connected_Users.get(index_connected_user).set_pseudo(m.get_user_src().get_pseudo());
+                	System.out.println("reçu nouveau pseudo pour :" + m.get_user_src().get_login() + " new pseudo = " + m.get_user_src().get_pseudo());
+                	
                 }else if (m.get_type().equals("DISCONNECT")) {
 	            	System.out.println("User disconnected : " + m.get_user_src().get_pseudo());
 	            	//ulocal.display_List();

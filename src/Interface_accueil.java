@@ -87,6 +87,10 @@ public class Interface_accueil {
 		});*/
 		userPanel.add(listUsers);
 		
+		//Pour plus tard si on a le temps pour différencier les envois
+		//JTextPane textPaneMessage = new JTextPane();
+		//Definition des attributs de style:
+		//SimpleAttributeSet green
         
         textAreaMessage = new JTextArea();
         JScrollPane scroll = new JScrollPane(textAreaMessage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -157,12 +161,12 @@ public class Interface_accueil {
         updateBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
         		//listUsers.removeAll();
-        		Message message_broadcast = new Message("BROADCAST",user_local, null, 0);
-        		message_broadcast.set_data("Automatique");
-        		client1.set_message(message_broadcast);
-        		client1.run();
+        		//Message message_broadcast = new Message("BROADCAST",user_local, null, 0);
+        		//message_broadcast.set_data("Automatique");
+        		//client1.set_message(message_broadcast);
+        		//client1.run();
+        		Change_Pseudo_Window CPW = new Change_Pseudo_Window(u_local, client1);
         	}
-        	
         });
         
         listUsers.addListSelectionListener(new ListSelectionListener() {

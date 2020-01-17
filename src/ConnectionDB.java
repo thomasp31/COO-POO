@@ -96,6 +96,19 @@ public class ConnectionDB {
 		return resultat;
 	}
 	
+	public boolean check_new_pseudo(String NP, User U) throws SQLException {
+		boolean res = true;
+		String sql="select * from Users;";
+		Statement smt = con.createStatement();
+		ResultSet rs = smt.executeQuery(sql);
+		while (rs.next()) {
+			if(rs.getString("pseudo").equals(NP)) {
+				System.out.println("Pseudo déjà pris");
+				res = false;
+			}
+		}
+		return res;
+	}
 	
 	
 	
