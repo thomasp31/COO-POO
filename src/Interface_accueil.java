@@ -210,7 +210,7 @@ public class Interface_accueil {
     		@Override
     		public void valueChanged(ListSelectionEvent e) {
     			String numFileStr = jList2ValueChanged(e, listFiles, selected_file);
-    			int numFileInt=Integer.parseInt(numFileStr);
+    			int numFileInt=Integer.parseInt(numFileStr.substring(3));
     			System.out.println("Fichier séléctionné : " + numFileInt);
     		}
     			
