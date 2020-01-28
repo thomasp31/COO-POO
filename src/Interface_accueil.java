@@ -66,6 +66,9 @@ public class Interface_accueil {
         JPanel envoiMessage = new JPanel();
         envoiMessage.setLayout(new BorderLayout());
         
+        JPanel fileSending = new JPanel();
+        fileSending.setLayout(new BorderLayout());
+        
         JPanel filePanel = new JPanel();
         filePanel.setLayout(new BorderLayout());
         
@@ -102,6 +105,11 @@ public class Interface_accueil {
         textAreaMessage.setLineWrap(true);
         textAreaMessage.setDragEnabled(true);
   
+        JTextField inputFile = new JTextField();
+        JButton sendFileButton = new JButton("FILE");
+        fileSending.add(inputFile,BorderLayout.CENTER);
+        fileSending.add(sendFileButton,BorderLayout.EAST);
+        envoiMessage.add(fileSending,BorderLayout.NORTH);
         
         inputMessage = new JTextField();
         envoiMessage.add(inputMessage,BorderLayout.CENTER);
@@ -110,9 +118,11 @@ public class Interface_accueil {
         
         conversationPanel.add(envoiMessage,BorderLayout.SOUTH);
         
-        JList listFiles = new JList();
+        
+        DefaultListModel modelFile = new DefaultListModel();
+        JList listFiles = new JList(modelFile);
 		listFiles.setBackground(Color.orange);
-		listFiles.setModel(new AbstractListModel() {
+		/*listFiles.setModel(new AbstractListModel() {
 			String[] values = new String[] {"FILE 1", "FILE 2", "FILE 3", "FILE 4"};
 			public int getSize() {
 				return values.length;
@@ -120,7 +130,7 @@ public class Interface_accueil {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		filePanel.add(listFiles);
         
         
@@ -137,6 +147,10 @@ public class Interface_accueil {
         server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model, listUsers, selected_user);
         client_udp client1 = new client_udp(user_local.get_port_ecoute(),user_local/*,user_dest*/); //Peut-être mettre le port d'envoi en attribut à User
         client1.Send_Broadcast();
+        
+        //Test envoi fichier client et serveur
+        Server_File_Transfert SFT = new Server_File_Transfert(user_local.get_port_ecoute()+1, user_local, textAreaMessage, modelFile, listUsers, selected_user);
+        Client_File_Transfert CFT = new Client_File_Transfert(user_local.get_port_ecoute()+1,user_local);
         
         sendButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
@@ -177,7 +191,7 @@ public class Interface_accueil {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				jList1ValueChanged(e,listUsers,client1,server);
+				jList1ValueChanged(e,listUsers,client1,server, CFT);
 				String hist="";
 				try {
 					hist = CDBI.get_historique(u_local, selected_user);
@@ -208,9 +222,21 @@ public class Interface_accueil {
         		
         	}
         });
+        
+        sendFileButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent ev) {
+        		//Ici on doit couper la première partie du drag and drop => File:// et ne garder que ce qui suit pour envoyer le fichier
+        		String sous_chaine = inputFile.getText().substring(6);
+        		CFT.set_file(sous_chaine);
+        		CFT.run();
+        		Message file_message = new Message("NORMAL", user_local, CFT.get_dest(), 0);
+        		file_message.set_data("FICHIER RECU");
+        		client1.set_message(file_message);
+        	}
+        });
     } 
     
-    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,client_udp c, server_udp s) {
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,client_udp c, server_udp s, Client_File_Transfert CFT_param) {
         //set text on right here
     	if(listUsers.getModel().getSize()!=0) {
 	        String str = (String) listUsers.getSelectedValue();
@@ -220,6 +246,7 @@ public class Interface_accueil {
 	        		selected_user=u;
 	        		s.selected_user=u;
 	        		c.set_dest(u);
+	        		CFT_param.set_dest(u);
 	        		System.out.println("changement de destinataire" + u.get_IP());
 	        	}
 	            
