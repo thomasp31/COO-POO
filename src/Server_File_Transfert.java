@@ -37,7 +37,6 @@ public class Server_File_Transfert extends Thread{
 		    	DatagramSocket ds = new DatagramSocket(this.port_local);
 				FileOutputStream fis;
 				DatagramPacket dp;
-				ds.setSoTimeout(10000);
 				File f;
 				byte[] b; 
 				for(int i = 0 ; i < 10000000 ; i++){
