@@ -260,6 +260,12 @@ public class Interface_accueil {
         		client1.run();
         		textAreaMessage.append(file_message.get_data() + "\n");
         		textAreaMessage.append(file_message.get_date() + "\n\n");
+        		try {
+					CDBI.Insert_messBDD(file_message);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         	}
         });
     } 

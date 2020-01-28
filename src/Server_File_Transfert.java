@@ -16,7 +16,7 @@ public class Server_File_Transfert extends Thread{
 	    public JList JLUsers;
 	    public DefaultListModel DLM; //permet de relier au model dans INterface_Accueil
 	    public User selected_user;
-	    private static final int TAILLE_MAXIMALE = 65536;
+	    private static final int TAILLE_MAXIMALE = 2000000;//65536;
 	    public static File repertoire = new File("../reception_fichiers");
 	    
 	    public Server_File_Transfert(int init_p_local,User init_u_source, JTextArea jta, DefaultListModel model, JList JL, User init_selected_user){
