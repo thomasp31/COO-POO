@@ -20,10 +20,10 @@ public class ConnectionDB {
 	public ConnectionDB() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			//this.dbURL="jdbc:mysql://srv-bdens.insa-toulouse.fr/tpservlet_03";//si connection à l'INSA
-			//this.con = DriverManager.getConnection(dbURL, "tpservlet_03", "phahNgo4");
-			this.dbURL="jdbc:mysql://localhost:3306/poo_chat_db";//Bdd locale pour travailler depuis l'extérieur de l'INSA
-			this.con = DriverManager.getConnection(dbURL,"userChat","userChat");
+			this.dbURL="jdbc:mysql://srv-bdens.insa-toulouse.fr/tpservlet_03";//si connection à l'INSA
+			this.con = DriverManager.getConnection(dbURL, "tpservlet_03", "phahNgo4");
+			//this.dbURL="jdbc:mysql://localhost:3306/poo_chat_db";//Bdd locale pour travailler depuis l'extérieur de l'INSA
+			//this.con = DriverManager.getConnection(dbURL,"userChat","userChat"); //idem ligne précédente
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
