@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.JSplitPane;
 import java.awt.GridLayout;
 import java.awt.CardLayout;
@@ -22,6 +24,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
@@ -210,8 +213,17 @@ public class Interface_accueil {
     		@Override
     		public void valueChanged(ListSelectionEvent e) {
     			String numFileStr = jList2ValueChanged(e, listFiles, selected_file);
-    			int numFileInt=Integer.parseInt(numFileStr.substring(3));
+    			int numFileInt=Integer.parseInt(numFileStr.substring(4));
     			System.out.println("Fichier séléctionné : " + numFileInt);
+    			
+    			//ouverture du fichier
+    			if(Desktop.getDesktop().isSupported(java.awt.Desktop.Action.OPEN)){
+    			    try {
+    			        java.awt.Desktop.getDesktop().open(new File("../reception_fichiers/"+numFileInt));
+    			    } catch (Exception ex) {
+    			       ex.printStackTrace();
+    			    }
+			    }
     		}
     			
 		});
