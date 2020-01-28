@@ -33,6 +33,7 @@ public class Server_File_Transfert extends Thread{
 	    }
 	    
 	    public void run(){
+	    	int num_fichier = 0;
 	    	try {
 		    	DatagramSocket ds = new DatagramSocket(this.port_local);
 				FileOutputStream fis;
@@ -46,6 +47,8 @@ public class Server_File_Transfert extends Thread{
 					dp = new DatagramPacket(b,TAILLE_MAXIMALE);
 					ds.receive(dp);
 					fis.write(dp.getData(),0,dp.getLength());
+					this.DLM.addElement("File" + num_fichier);
+					num_fichier++;
 				}
 				ds.close();
 				System.out.println("Fichier reçu");

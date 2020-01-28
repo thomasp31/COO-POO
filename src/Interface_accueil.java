@@ -42,6 +42,8 @@ public class Interface_accueil {
 	public JTextField inputMessage;
 	public ConnectionDB CDBI = new ConnectionDB();
 	public User selected_user;
+	public String selected_file;
+	
     public Interface_accueil(String l, User u_local/*, User u_dest*//*, int init_port_src, int init_port_dest*/){ 
     	
     	//port_src = init_port_src;
@@ -203,6 +205,17 @@ public class Interface_accueil {
 			}
         });
         
+        listFiles.addListSelectionListener(new ListSelectionListener() {
+        	
+    		@Override
+    		public void valueChanged(ListSelectionEvent e) {
+    			String numFileStr = jList2ValueChanged(e, listFiles, selected_file);
+    			int numFileInt=Integer.parseInt(numFileStr);
+    			System.out.println("Fichier séléctionné : " + numFileInt);
+    		}
+    			
+		});
+      
         
         f.addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent e){
@@ -229,10 +242,12 @@ public class Interface_accueil {
         		String sous_chaine = inputFile.getText().substring(6);
         		CFT.set_file(sous_chaine);
         		CFT.run();
-        		Message file_message = new Message("NORMAL", user_local, CFT.get_dest(), 0);
-        		file_message.set_data("FICHIER RECU");
+        		Message file_message = new Message("NORMAL", user_local, client1.get_dest(), 0);
+        		file_message.set_data("Fichier envoyé par " + file_message.get_user_src().get_pseudo() + "\n");
         		client1.set_message(file_message);
         		client1.run();
+        		textAreaMessage.append(file_message.get_data() + "\n");
+        		textAreaMessage.append(file_message.get_date() + "\n\n");
         	}
         });
     } 
@@ -254,5 +269,15 @@ public class Interface_accueil {
 	        }
     	}
 	}
+    
+    private String jList2ValueChanged(ListSelectionEvent e, JList fileList, String Selected_File) {
+    	String str="";
+		if(fileList.getModel().getSize()!=0) {
+	        str = (String) fileList.getSelectedValue();
+	        Selected_File = str;
+		}
+		return str;
+	}
+    
     
 }
