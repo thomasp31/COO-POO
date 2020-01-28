@@ -232,6 +232,7 @@ public class Interface_accueil {
         		Message file_message = new Message("NORMAL", user_local, CFT.get_dest(), 0);
         		file_message.set_data("FICHIER RECU");
         		client1.set_message(file_message);
+        		client1.run();
         	}
         });
     } 
