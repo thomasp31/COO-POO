@@ -21,6 +21,7 @@ public class Connection_Interface extends JFrame implements ActionListener {
     JPanel panel;
     JLabel user_label, password_label, message;
     JTextField userName_text;
+    char[] getPass;
     JPasswordField password_text;
     JButton submit, cancel;
 
@@ -78,7 +79,10 @@ public class Connection_Interface extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
     	//On récupère les infos entrées dans les JtextField 
         String userName = userName_text.getText();
-        String password = password_text.getText();
+        //récupération du password
+        getPass=password_text.getPassword();
+        String password = String.copyValueOf(getPass);
+        //String password = password_text.getText();
         User user_local;
         try {
         	//On vérifie que le username(=login) et password coincident

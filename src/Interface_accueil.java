@@ -53,7 +53,7 @@ public class Interface_accueil {
     	
     	//Création de la partie graphique
     	JFrame f=new JFrame("my chat");
-        f.setSize(400,400);        
+        f.setSize(400,400);         
         
         /*Définition des Panel*/
         
@@ -275,7 +275,14 @@ public class Interface_accueil {
         sendFileButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
         		//Ici on doit couper la première partie du drag and drop => File:// et ne garder que ce qui suit pour envoyer le fichier
-        		String sous_chaine = inputFile.getText().substring(6);
+        		String inFile = inputFile.getText();
+        		String sous_chaine="";
+        		//Lors du dragAndDrop, le texte ajoute un espace à la fin donc on doit le retirer 
+        		if (inFile.substring(inFile.length()-1).equals(" ")) {
+        			sous_chaine = inputFile.getText().substring(6,inputFile.getText().length()-1);//-1 pour enlever l'espace à la fin du fichier
+        		}else {//Si il n'y est pas on prend toute la chaine
+        			sous_chaine = inputFile.getText().substring(6);
+        		}
         		//on prépare le chemin du fichier et on le met dans notre client d'envoi de fichier
         		CFT.set_file(sous_chaine);
         		//On envoie le fichier
