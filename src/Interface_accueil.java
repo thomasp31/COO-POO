@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
@@ -32,8 +33,17 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import java.awt.Scrollbar;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTargetDropEvent;
+
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
+import java.io.File;
+import java.util.List;
 
 public class Interface_accueil {
     
@@ -100,9 +110,29 @@ public class Interface_accueil {
         textAreaMessage.setLineWrap(true);
         textAreaMessage.setDragEnabled(true);
   
-        //Endoir ou l'on doit glisser déposer le fichier
-        JTextField inputFile = new JTextField();
-        //Bouton d'envoi du fichier
+        //Endroit ou l'on doit glisser déposer le fichier
+        JTextArea inputFile = new JTextArea();
+        inputFile.setDropTarget(new DropTarget() {
+        	public synchronized void drop(DropTargetDropEvent evt) {
+	        	try {
+		        	evt.acceptDrop(DnDConstants.ACTION_COPY);
+		        	List<File> droppedFiles = (List<File>) evt
+		        	.getTransferable().getTransferData(
+		        	DataFlavor.javaFileListFlavor);
+		        	for (File file : droppedFiles) {
+			        	/*
+			        	* NOTE:
+			        	*  When I change this to a println,
+			        	*  it prints the correct path
+			        	*/
+			        	inputFile.setText(file.getAbsolutePath());
+		        	}
+	        	}catch(Exception e) {
+	        		
+	        	}
+	        }
+        });
+        	//Bouton d'envoi du fichier
         JButton sendFileButton = new JButton("FILE");
         
         //ajout des éléments dans le panel
@@ -263,7 +293,15 @@ public class Interface_accueil {
             		message_deco.set_data("Automatique");
             		client1.set_message(message_deco);
             		client1.run();
-            		server.stop();
+            		
+            		//Ici on stop le processus pour tout terminer une fois l'application fermée
+            		try {
+            			long pid = ProcessHandle.current().pid();
+						Runtime.getRuntime().exec("kill -SIGINT "+pid);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
         			f.dispose();
         		//}else {
         			//Sinon on garde la fenẗre ouverte mais ne fonctionne pas...
@@ -277,16 +315,18 @@ public class Interface_accueil {
         sendFileButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
         		//Ici on doit couper la première partie du drag and drop => File:// et ne garder que ce qui suit pour envoyer le fichier
-        		String inFile = inputFile.getText();
+        		String testArea =inputFile.getText();
+        		//String inFile = inputFile.getText();
         		String sous_chaine="";
         		//Lors du dragAndDrop, le texte ajoute un espace à la fin donc on doit le retirer 
-        		if (inFile.substring(inFile.length()-1).equals(" ")) {
+        		/*if (inFile.substring(inFile.length()-1).equals(" ")) {
         			sous_chaine = inputFile.getText().substring(6,inputFile.getText().length()-1);//-1 pour enlever l'espace à la fin du fichier
         		}else {//Si il n'y est pas on prend tout le String
         			sous_chaine = inputFile.getText().substring(6);
-        		}
+        		}*/
         		//on prépare le chemin du fichier et on le met dans notre client d'envoi de fichier
-        		CFT.set_file(sous_chaine);
+        		CFT.set_file(testArea);
+        		//CFT.set_file(sous_chaine);
         		//On envoie le fichier
         		CFT.run();
         		//on envoie aussi un message au destinataire de type NORMAL pour notifier qu'il a reçu un fichier
