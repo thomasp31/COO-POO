@@ -22,7 +22,7 @@ public class User implements Serializable{
 	 public transient ArrayList<User> Connected_Users = new ArrayList<User>();
 	 private String ip_addr;
 	 //Conversation inutile
-	 private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
+	 //private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
 	 
 	 
 	 //Constructeur du User
@@ -155,13 +155,14 @@ public class User implements Serializable{
 	  
 	 //permet d'ajouter une conversation a la liste des conversations actives de l'user
 	 //inutile car finalement pas utilisé
+	 /*
 	 public void ajouter_conversation(Conversation c) {
 		 list_conversation.add(c);
 	 }
-	 
+	 */
 	 //retourne une conversation de l'user grace a son id
 	 //Inutile car Conversation pas utilisé
-	 
+	 /*
 	 public Conversation get_conversation_by_id(int id_conv) {
 		 
 		 Conversation returned_conversation = new Conversation(666,null,null);
@@ -182,7 +183,7 @@ public class User implements Serializable{
 		 return returned_conversation;
 		 
 		 
-	 }
+	 }*/
 
 	public int get_port_envoi() {
 		return port_envoi;

@@ -6,8 +6,6 @@ import java.util.*;
 import java.text.*;
 
 
-
-
 public class Message implements Serializable{
 	
 	
@@ -18,15 +16,15 @@ public class Message implements Serializable{
 	private int idu_dest = 0;
 	private String data ="";
 	private String type = "default";
-	private int id_conv;
+	//private int id_conv;
 	private String Stringdate;
 	
 	//COnstructeur d'un message
-	public Message(String init_type,User init_user_src,User init_user_dest,int init_id_conv) { //init id conv inutile car conversation finalement pas utilisé
+	public Message(String init_type,User init_user_src,User init_user_dest/*,int init_id_conv*/) { //init id conv inutile car conversation finalement pas utilisé
 		this.user_src = init_user_src;
 		this.user_dest = init_user_dest;
 		this.type = init_type;
-		this.id_conv = init_id_conv;
+		//this.id_conv = init_id_conv;
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.Stringdate = format.format(new Date());
 	}
@@ -51,9 +49,11 @@ public class Message implements Serializable{
 		return this.user_dest;
 	}
 	
+	/*
 	public int get_id_conv() {
 		return this.id_conv;
-	}
+	}*/
+	
 	public String get_date() {
 		return Stringdate;
 	}

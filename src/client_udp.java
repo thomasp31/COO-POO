@@ -80,7 +80,8 @@ public class client_udp extends Thread{
     
     //Méthode d'envoi en broadcast quand on vient de se connecter
     public void Send_Broadcast() {
-    	Message message_broadcast = new Message("BROADCAST",this.user_src, null, 0);
+    	//Message message_broadcast = new Message("BROADCAST",this.user_src, null, 0);
+    	Message message_broadcast = new Message("BROADCAST",this.user_src, null);
 		message_broadcast.set_data("Automatique");
 		this.set_message(message_broadcast);
 		this.run();
@@ -88,7 +89,8 @@ public class client_udp extends Thread{
     
     //Méthode d'envoi en broadcast quand le pseudo a changé
     public void Send_Update_Pseudo(User U_src) {
-    	Message message_broadcast = new Message("UPDATE",U_src, null, 0);
+    	//Message message_broadcast = new Message("UPDATE",U_src, null, 0);
+    	Message message_broadcast = new Message("UPDATE",U_src, null);
 		message_broadcast.set_data("Changement Pseudo");
 		this.set_message(message_broadcast);
 		this.run();

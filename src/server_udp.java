@@ -69,7 +69,8 @@ public class server_udp extends Thread{
                 	if(m.get_user_src().get_login()!=ulocal.get_login()) {
 	                	System.out.println("avant if BROADCAST ");
 	                	//On prépare un message du type REP_BROADCAST
-	                	Message mes_reponse = new Message("REP_BROADCAST",ulocal,m.get_user_src(),0);
+	                	//Message mes_reponse = new Message("REP_BROADCAST",ulocal,m.get_user_src(),0);
+	                	Message mes_reponse = new Message("REP_BROADCAST",ulocal,m.get_user_src());
 	                	mes_reponse.set_data("Automatique");//inutile mais avait généré une erreur si pas de texte
 	                	
 	                	//On prépare le message de réponse à envoyer

@@ -1,5 +1,5 @@
 //importation
-import java.net.*;
+/*import java.net.*;
 import java.io.*;
 import javax.swing.*;
 import java.lang.*;
@@ -37,4 +37,4 @@ public class Conversation implements Serializable{
 	
 	
 	
-}
+}*/

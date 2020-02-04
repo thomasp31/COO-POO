@@ -166,7 +166,8 @@ public class Interface_accueil {
         			//On récupère ce qui a été écrit
 	        		String s = inputMessage.getText();
 	        		//On créé un Message de type NORMAL
-	        		Message m = new Message("NORMAL", user_local, client1.get_dest(), 0 );
+	        		//Message m = new Message("NORMAL", user_local, client1.get_dest(), 0 );
+	        		Message m = new Message("NORMAL", user_local, client1.get_dest());
 	        		//On y rajoute la data et et la date
 	        		m.set_data(s);
 	        		m.set_date();
@@ -196,7 +197,7 @@ public class Interface_accueil {
         	public void actionPerformed(ActionEvent ev) {
         		//On ouvre une fenêtre permettant de changer le pseudo à laquelle on passe le user_local pour modifier le pseudo
         		//ainsi que le client pour renvoyer un broadcast lorsque le pseudo a été changé
-        		Change_Pseudo_Window CPW = new Change_Pseudo_Window(u_local, client1);
+        		Change_Pseudo_Window CSend_Update_PseudoPW = new Change_Pseudo_Window(u_local, client1);
         	}
         });
         
@@ -253,20 +254,21 @@ public class Interface_accueil {
         f.addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent e){
         		//Ouverture de la demande de confirmation
-        		int reponse = JOptionPane.showConfirmDialog(f,"Voulez-vous quitter l'application","Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        		//int reponse = JOptionPane.showConfirmDialog(f,"Voulez-vous quitter l'application","Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         		
         		//Si oui, on ferme et on envoi un broadcast de déconnexion
-        		if (reponse==JOptionPane.YES_OPTION){
-        			Message message_deco= new Message("DISCONNECT",user_local, null, 0);
+        		//if (reponse==JOptionPane.YES_OPTION){
+        			//Message message_deco= new Message("DISCONNECT",user_local, null, 0);
+        			Message message_deco= new Message("DISCONNECT",user_local, null);
             		message_deco.set_data("Automatique");
             		client1.set_message(message_deco);
             		client1.run();
+            		server.stop();
         			f.dispose();
-        			server.stop();
-        		}else {
+        		//}else {
         			//Sinon on garde la fenẗre ouverte mais ne fonctionne pas...
-        			f.setVisible(true);
-        		}
+        			//f.setVisible(true);
+        		//}
         		
         	}
         });
@@ -280,7 +282,7 @@ public class Interface_accueil {
         		//Lors du dragAndDrop, le texte ajoute un espace à la fin donc on doit le retirer 
         		if (inFile.substring(inFile.length()-1).equals(" ")) {
         			sous_chaine = inputFile.getText().substring(6,inputFile.getText().length()-1);//-1 pour enlever l'espace à la fin du fichier
-        		}else {//Si il n'y est pas on prend toute la chaine
+        		}else {//Si il n'y est pas on prend tout le String
         			sous_chaine = inputFile.getText().substring(6);
         		}
         		//on prépare le chemin du fichier et on le met dans notre client d'envoi de fichier
@@ -288,14 +290,17 @@ public class Interface_accueil {
         		//On envoie le fichier
         		CFT.run();
         		//on envoie aussi un message au destinataire de type NORMAL pour notifier qu'il a reçu un fichier
-        		Message file_message = new Message("NORMAL", user_local, client1.get_dest(), 0);
-        		file_message.set_data("Fichier envoyé par " + file_message.get_user_src().get_pseudo() + "\n");
+        		//Message file_message = new Message("NORMAL", user_local, client1.get_dest(), 0);
+        		Message file_message = new Message("NORMAL", user_local, client1.get_dest());
+        		file_message.set_data("Fichier envoyé par " + file_message.get_user_src().get_pseudo());
         		client1.set_message(file_message);
         		client1.run();
         		//On ajoute ce nouveau message dans le text area
         		textAreaMessage.append(file_message.get_data() + "\n");
         		textAreaMessage.append(file_message.get_date() + "\n\n");
         		
+        		//On remer le JTextField vide
+        		inputFile.setText("");
         		//Et on l'insère dans la BDD aussi
         		try {
 					CDBI.Insert_messBDD(file_message);
