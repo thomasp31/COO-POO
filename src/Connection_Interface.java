@@ -24,34 +24,26 @@ public class Connection_Interface extends JFrame implements ActionListener {
     JPasswordField password_text;
     JButton submit, cancel;
 
-    
+    //On crée une instance de connection à la BDD pour checker les login/password lors de la connexion
     public ConnectionDB CDB = new ConnectionDB();
-    //public int port_src;
-	//public int port_dest;
-	//public User user_local;
-	//public User user_dest;// A changer quand on aura plusieurs utilisateurs
 	public JTextArea textAreaMessage;
 	public JTextField inputMessage;
 	
-    public Connection_Interface(/*int init_port_src, int init_port_dest, User u_local/*, User u_dest*/) { //A degager car pas besoin des ports etc
-        //initialisation des paramètres
-    	//port_src = init_port_src;
-    	//port_dest = init_port_dest;
-    	//user_local = u_local;
-    	//user_dest = u_dest;
+    public Connection_Interface() {
+    	//initialisation des éléments de l'interface de connexion
     	
         // User Label
         user_label = new JLabel();
         user_label.setText("User Name :");
         userName_text = new JTextField();
         
-        // PasswordSQLException
+        // Password Label
 
         password_label = new JLabel();
         password_label.setText("Password :");
         password_text = new JPasswordField();
 
-        // Submit
+        // Submit bouton pour se connecter
 
         submit = new JButton("SUBMIT");
         panel = new JPanel(new GridLayout(3, 1));
@@ -74,39 +66,39 @@ public class Connection_Interface extends JFrame implements ActionListener {
         setTitle("Please Login Here !");
         setSize(300, 100);
         setVisible(true);
-        panel.getRootPane().setDefaultButton(submit); //Fait réagir le bouton "submit" lors du click sur le bouton ENTREE
+        
+        //Fait réagir le bouton "submit" lors du click sur le bouton ENTREE	
+        panel.getRootPane().setDefaultButton(submit);
     }
+    
+    
+    //méthode réagissant au clic du bouton Submit
     
     @Override
     public void actionPerformed(ActionEvent ae) {
+    	//On récupère les infos entrées dans les JtextField 
         String userName = userName_text.getText();
         String password = password_text.getText();
         User user_local;
         try {
+        	//On vérifie que le username(=login) et password coincident
 			if(CDB.Connection_Users(userName, password)) {
+				//Si ce n'est pas l'admin, on créé le user et on lance l'interface_accueil du chat
 				if (!userName.equals("Admin")) {
 					user_local = CDB.Create_User(userName);
-					//Interface_accueil I = new Interface_accueil(user_local.get_pseudo() + " Interface", user_local.get_port_ecoute(),1998,user_local,user_dest);
 					Interface_accueil I = new Interface_accueil(user_local.get_pseudo() + " Interface",user_local);
+					//On ferme l'interface de connection au lancement de l'interface d'accueil
 					this.dispose();
 				}else{
+					//Si c'est l'admin pas besoin de créer un User, on lance juste l'interface Admin
 					System.out.println("user Name : Admin");
 					Admin_Interface AI = new Admin_Interface();
+					//On ferme l'interface de connection au lancement de l'interface Admin
 					this.dispose();
 				}
 			}
-			/*
-			if (userName.trim().equals("Thomas") && password.trim().equals("Thomas")) {
-				Interface_accueil I = new Interface_accueil("Thomas", port_src,port_dest,user_local,user_dest);
-				this.dispose();
-			}else if(userName.trim().equals("Pierre") && password.trim().equals("Pierre")) {
-				Interface_accueil I = new Interface_accueil("Pierre", port_src,port_dest,user_local,user_dest);
-				this.dispose();
-			}else if(userName.trim().equals("Jack") && password.trim().equals("Jack")) {
-				Interface_accueil I = new Interface_accueil("Jack", port_src,port_dest,user_local,user_dest);
-				this.dispose();
-			}*/
 			else {
+				//Si le password est faux on prévient l'utilisateur
 			    message.setText("Password incorrect !");
 			}
 		} catch (SQLException e) {

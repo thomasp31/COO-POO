@@ -18,12 +18,14 @@ public class User implements Serializable{
 	 private transient String state; 
 	 private int port_ecoute;
 	 private int port_envoi;
+	 //Chaque user a sa propre list d'user connecté
 	 public transient ArrayList<User> Connected_Users = new ArrayList<User>();
 	 private String ip_addr;
+	 //Conversation inutile
 	 private ArrayList<Conversation> list_conversation = new ArrayList<Conversation>();
 	 
 	 
-	 
+	 //Constructeur du User
 	 public User(String init_pseudo,String init_login,String init_state, int init_port_ecoute,int init_port_envoi, int init_ID) {
 		 this.personnal_ID=init_ID;
 		 this.pseudo= init_pseudo;
@@ -33,14 +35,15 @@ public class User implements Serializable{
 		 this.port_envoi=init_port_envoi;
 	 }
 	 
+	 //Permet d'afficher le list des users connectés
+	 //Test uniquement
 	 public void display_List() {
 		 for(User u : this.Connected_Users) {
 			 System.out.println("List des users connectés : " + u.get_pseudo()+ "\n");
 		 }
 	 }
 	 
-	 
-	 
+	 //Permet de tester si le User est déjà dans la list des users connectés ou non
 	 public boolean isInside(String l) {
 		 boolean result = false;
 		 if (this.Connected_Users.isEmpty()!= true) {
@@ -55,6 +58,7 @@ public class User implements Serializable{
 		 return result;
 	 }
 	 
+	 //permet de remove un user mais non utilisé
 	 public boolean remove_user(User u) {
 		 boolean result = false;
 		 if (this.Connected_Users.isEmpty()!= true) {
@@ -67,6 +71,8 @@ public class User implements Serializable{
 		 return result;
 	 }
 	 
+	 //Retourne l'index d'un user dans la liste des conecté
+	 //Permet dans le seveur de le supprimer lorsqu'il se déconnecte
 	 public int index_of(User user) {
 		 int index = 0;
 		 int res=0;
@@ -80,8 +86,6 @@ public class User implements Serializable{
 		 }
 		 return res;
 	 }
-	 
-	 
 	 
 	 
 	 public int get_port_ecoute() {
@@ -124,6 +128,7 @@ public class User implements Serializable{
 		 this.state = new_state;
 	 }
 	 
+	 //Méthode renvoyant l'adresse ip de la machine
 	 public String get_local_ip() {
 		 String local_ip_address ="";
 		 try{
@@ -149,14 +154,13 @@ public class User implements Serializable{
 	 }
 	  
 	 //permet d'ajouter une conversation a la liste des conversations actives de l'user
+	 //inutile car finalement pas utilisé
 	 public void ajouter_conversation(Conversation c) {
-		 
 		 list_conversation.add(c);
-		 
 	 }
 	 
 	 //retourne une conversation de l'user grace a son id
-	 //probleme quand il trouve pas la conv (
+	 //Inutile car Conversation pas utilisé
 	 
 	 public Conversation get_conversation_by_id(int id_conv) {
 		 

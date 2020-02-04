@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.lang.*;
 import java.util.*;
 
+//CLASSE INUTILE A SUPPRIMER
 
 public class Conversation implements Serializable{
 	

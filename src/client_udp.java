@@ -13,61 +13,44 @@ public class client_udp extends Thread{
     private String addr_ip_dest="";
     private Message message_to_send;
 
-    public client_udp(int init_port_dest,User init_user_src/*,User init_user_dest*/){
+    //Client permettant tout type d'envoi excepté les fichiers
+    public client_udp(int init_port_dest,User init_user_src){
         this.port_dest = init_port_dest;
         this.user_src = init_user_src;
         this.user_dest = null;
-        //start();
     }
 
 
 
     public void run(){
+    	//nbre inutile
         int nbre = 0;
 
-        //while(true){
-        	
-        	
-       
-        	//Message message = new Message("NORMAL",this.user_src,this.user_dest,0);
-        	//System.out.println("Tapez votre message : ");
-            //Scanner input = new Scanner(System.in);
-            
-            //String envoi = input.nextLine();
-            //message.set_data(envoi);
-            //message.set_date();
-            
-            
-              
             try {
             	
-            	
+            	//préparation à l'envoi
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
                 oos.writeObject(message_to_send);
                 byte[] buff = baos.toByteArray();
                 
-                
-                //oos.writeInt(1);
-                //oos.writeObject(message);
-                //oos.flush();
-                
-                
-                
                 //On initialise la connexion côté client
                 DatagramSocket client = new DatagramSocket();
-                
-                //Affichage adresse ip de la machine destinataire
-                //System.out.println("adresse Ip du destinataire " + this.user_dest.get_local_ip());
-                
-                //On crée notre datagramme
-                //InetAddress adresse = InetAddress.getByName(this.user_dest.get_local_ip());
+
+                //Si le message a envoyé est du type BROADCAST ou DISCONNECT OU UPDATE
+                //alors l'adresse IP devient celle du broadcast
                 if (message_to_send.get_type().equals("BROADCAST") || message_to_send.get_type().equals("DISCONNECT") || message_to_send.get_type().contentEquals("UPDATE")) {
+                	//test
                 	System.out.println("Envoi en broadcast \n");
+                	
                 	addr_ip_dest = "255.255.255.255";
             
+                	//Sinon elle redevient celle du destinataire
                 }else if (message_to_send.get_type().equals("NORMAL")) {
+                	
                 	addr_ip_dest = user_dest.get_IP();
+                	
+                	//Test
                 	System.out.println("adresse ip destinataire" + addr_ip_dest);
                 }
                 
@@ -77,13 +60,10 @@ public class client_udp extends Thread{
                 //On lui affecte les données à envoyer
                 packet.setData(buff);
                 
-                //On envoie au serveur si le destinataire à bien été set
-                //if(this.get_dest() != null) {
-                //SI LE CLIENT EST NULL, ON LE GÈRE COTÉ INTERFACE_ACCUEIL
-                client.send(packet);
-                //}
+                //SI LE CLIENT EST NULL, ON LE GÈRE COTÉ INTERFACE_ACCUEIL lors du click sur le bouton d'envoi
+                client.send(packet);   
                 
-                
+                //Test
                 System.out.println("DONE SENDING \n");
                     
             } catch (SocketException e) {
@@ -98,6 +78,7 @@ public class client_udp extends Thread{
         
     }      
     
+    //Méthode d'envoi en broadcast quand on vient de se connecter
     public void Send_Broadcast() {
     	Message message_broadcast = new Message("BROADCAST",this.user_src, null, 0);
 		message_broadcast.set_data("Automatique");
@@ -105,6 +86,7 @@ public class client_udp extends Thread{
 		this.run();
     }
     
+    //Méthode d'envoi en broadcast quand le pseudo a changé
     public void Send_Update_Pseudo(User U_src) {
     	Message message_broadcast = new Message("UPDATE",U_src, null, 0);
 		message_broadcast.set_data("Changement Pseudo");
@@ -112,6 +94,8 @@ public class client_udp extends Thread{
 		this.run();
     }
     
+    
+    //Lorsqu'on set le destinataire, on change l'IP de destination
     public void set_dest(User U) {
     	this.user_dest = U;
     	this.addr_ip_dest = U.get_IP();

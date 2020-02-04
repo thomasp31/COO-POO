@@ -60,19 +60,27 @@ public class Change_Pseudo_Window extends JFrame implements ActionListener{
         
 	}
 
+	//réaction lors du click pour valider le changement du pseudo
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		// TODO Auto-generated method stub
+		//On récupère le nouveau pseudo entré
 		String inputPseudo = userPseudo_text.getText();
 		try {
+			//On vérifie dans la BDD qu'il n'existe pas déjà
 			if(CDB2.check_new_pseudo(inputPseudo)) {
+				//Si OK on l'affiche
 				message_erreur.setText("Pseudo OK");
+				//on change le pseudo du user_local passé en attribut
 				user_to_change.set_pseudo(inputPseudo);
+				//on envoi un broadcast pour que tous les Users update le nouveau pseudo
 				C.Send_Update_Pseudo(user_to_change);
+				//Et on le précise à la BDD aussi
 				CDB2.Update_Pseudo(inputPseudo, user_to_change);
 				this.dispose();
 				
 			}else {
+				//Si déjà pris on prévient le User
 				message_erreur.setText("Pseudo déjà pris");
 			}
 		}catch(SQLException e) {

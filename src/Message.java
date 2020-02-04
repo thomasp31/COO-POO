@@ -21,7 +21,8 @@ public class Message implements Serializable{
 	private int id_conv;
 	private String Stringdate;
 	
-	public Message(String init_type,User init_user_src,User init_user_dest,int init_id_conv) {
+	//COnstructeur d'un message
+	public Message(String init_type,User init_user_src,User init_user_dest,int init_id_conv) { //init id conv inutile car conversation finalement pas utilisé
 		this.user_src = init_user_src;
 		this.user_dest = init_user_dest;
 		this.type = init_type;
@@ -57,6 +58,7 @@ public class Message implements Serializable{
 		return Stringdate;
 	}
 	
+	//Méthode ajoutant la date au message
 	public void set_date() {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.Stringdate = format.format(new Date());
