@@ -17,9 +17,10 @@ Ainsi vous pouvez rajouter un utilisateur ou bien voir les informations sur un u
 
 ## Connexion en tant qu'utilisateur
 Entrer un des login/mot de passe présent dans la base de donnée à savoir :
-Thomas/Thomas
-Pierre/Pierre
-Gerard/Gerard
+
+Thomas/Thomas,
+Pierre/Pierre,
+Gerard/Gerard,
 Jean/Jean
 
 Possibilité aussi de créer un User depuis l'interface admin et ensuite se conneter avec celui-ci.
