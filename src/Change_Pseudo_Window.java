@@ -1,21 +1,14 @@
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JPanel;
 
 public class Change_Pseudo_Window extends JFrame implements ActionListener{
 	
@@ -26,9 +19,9 @@ public class Change_Pseudo_Window extends JFrame implements ActionListener{
 	public JButton submit;
 	public  JLabel message_erreur;
 	public ConnectionDB CDB2= new ConnectionDB();
-	public client_udp C;
+	public Client_Udp C;
 	
-	public Change_Pseudo_Window(User init_u_to_change, client_udp init_client){
+	public Change_Pseudo_Window(User init_u_to_change, Client_Udp init_client){
 		this.user_to_change = init_u_to_change;
 		this.C=init_client;
 		

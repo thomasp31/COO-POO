@@ -1,24 +1,10 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-
-import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Desktop;
-
-import javax.swing.JSplitPane;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -30,22 +16,15 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.Scrollbar;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTargetDropEvent;
-
-import java.awt.datatransfer.DataFlavor;
-import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDropEvent;
-import java.io.File;
 import java.util.List;
 
-public class Interface_accueil {
+public class Interface_Accueil {
     
 	public User user_local;
 	public JTextArea textAreaMessage;
@@ -57,7 +36,7 @@ public class Interface_accueil {
 	
 	//Une fois que le User a rentré son login et password, le User est créé en java et cette fenêtre est lancé
 	//Ce sera donc la fenêtre de chat
-    public Interface_accueil(String l, User u_local){ 
+    public Interface_Accueil(String l, User u_local){ 
     	//on passe le user créé dans l'interface de connection en paramètre pour récupérer les infos
     	user_local = u_local;
     	
@@ -92,7 +71,7 @@ public class Interface_accueil {
         
         //Création d'un JScrollPane pour que notre list User soit scrollable
         JScrollPane JSPList = new JScrollPane();
-        //Moder nous servant à la mise à jour de la liste des users connectés
+        //Model nous servant à la mise à jour de la liste des users connectés
         DefaultListModel model = new DefaultListModel();
         JList listUsers = new JList(model);
        
@@ -112,6 +91,10 @@ public class Interface_accueil {
   
         //Endroit ou l'on doit glisser déposer le fichier
         JTextArea inputFile = new JTextArea();
+        inputFile.setLineWrap(true);
+        JScrollPane scroll2 = new JScrollPane(inputFile, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        //permet d'adapterce qui est déposé pour avoir le path du fichier
         inputFile.setDropTarget(new DropTarget() {
         	public synchronized void drop(DropTargetDropEvent evt) {
 	        	try {
@@ -120,11 +103,6 @@ public class Interface_accueil {
 		        	.getTransferable().getTransferData(
 		        	DataFlavor.javaFileListFlavor);
 		        	for (File file : droppedFiles) {
-			        	/*
-			        	* NOTE:
-			        	*  When I change this to a println,
-			        	*  it prints the correct path
-			        	*/
 			        	inputFile.setText(file.getAbsolutePath());
 		        	}
 	        	}catch(Exception e) {
@@ -136,13 +114,15 @@ public class Interface_accueil {
         JButton sendFileButton = new JButton("FILE");
         
         //ajout des éléments dans le panel
-        fileSending.add(inputFile,BorderLayout.CENTER);
+        //fileSending.add(inputFile,BorderLayout.CENTER);
+        fileSending.add(scroll2, BorderLayout.CENTER);
         fileSending.add(sendFileButton,BorderLayout.EAST);
         //ajout du panel d'envou de fichier dans le panel de l'envoi des messages
         envoiMessage.add(fileSending,BorderLayout.NORTH);
         
         //Zone d'input des messages que l'on écrit
         inputMessage = new JTextField();
+        inputMessage.setDragEnabled(false);
         envoiMessage.add(inputMessage,BorderLayout.CENTER);
         //Bouton d'envoi du message
         JButton sendButton = new JButton("SEND");
@@ -172,10 +152,10 @@ public class Interface_accueil {
         
         //Le serveur prend en paramètre le port où il écoute, le user_local (user connecté à notre interface), le text area ou on affiche les messages pour qu'on puisse le modifer
         //La listUsers, son model ainsi que le user selected pour pouvoir vérifier si on doit afficher les messages ou non lorsqu'on les reçoit 
-        server_udp server = new server_udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model, listUsers, selected_user);
+        Server_Udp server = new Server_Udp(user_local.get_port_ecoute(), user_local, textAreaMessage, model, listUsers, selected_user);
         
         //Le client n'a besoin que deu port d'écoute et du user_local
-        client_udp client1 = new client_udp(user_local.get_port_ecoute(),user_local);
+        Client_Udp client1 = new Client_Udp(user_local.get_port_ecoute(),user_local);
         
         //Dès que l'on créé l'interface, on lance un BROADCAST pour prévenir qu'on s'est connecté
         client1.Send_Broadcast();
@@ -185,11 +165,12 @@ public class Interface_accueil {
         Server_File_Transfert SFT = new Server_File_Transfert(user_local.get_port_ecoute()+2, user_local, textAreaMessage, modelFile, listUsers, selected_user);
         Client_File_Transfert CFT = new Client_File_Transfert(user_local.get_port_ecoute()+2,user_local);
         
+        
         //Permet de réagir au bouton d'envoi d'un message
         sendButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
         		
-        		//Ici on vérifie u'un User a bien était selectionné avant de parler
+        		//Ici on vérifie qu'un User a bien était selectionné avant de parler
         		//Sert surtout juste après s'être connecté lorsqu'on n'a parlé a personne
         		
         		if(client1.get_dest()!=null) {
@@ -314,46 +295,47 @@ public class Interface_accueil {
         //Réaction au bouton d'nvoi d'un fichier
         sendFileButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
-        		//Ici on doit couper la première partie du drag and drop => File:// et ne garder que ce qui suit pour envoyer le fichier
-        		String testArea =inputFile.getText();
-        		//String inFile = inputFile.getText();
-        		String sous_chaine="";
-        		//Lors du dragAndDrop, le texte ajoute un espace à la fin donc on doit le retirer 
-        		/*if (inFile.substring(inFile.length()-1).equals(" ")) {
-        			sous_chaine = inputFile.getText().substring(6,inputFile.getText().length()-1);//-1 pour enlever l'espace à la fin du fichier
-        		}else {//Si il n'y est pas on prend tout le String
-        			sous_chaine = inputFile.getText().substring(6);
-        		}*/
-        		//on prépare le chemin du fichier et on le met dans notre client d'envoi de fichier
-        		CFT.set_file(testArea);
-        		//CFT.set_file(sous_chaine);
-        		//On envoie le fichier
-        		CFT.run();
-        		//on envoie aussi un message au destinataire de type NORMAL pour notifier qu'il a reçu un fichier
-        		//Message file_message = new Message("NORMAL", user_local, client1.get_dest(), 0);
-        		Message file_message = new Message("NORMAL", user_local, client1.get_dest());
-        		file_message.set_data("Fichier envoyé par " + file_message.get_user_src().get_pseudo());
-        		client1.set_message(file_message);
-        		client1.run();
-        		//On ajoute ce nouveau message dans le text area
-        		textAreaMessage.append(file_message.get_data() + "\n");
-        		textAreaMessage.append(file_message.get_date() + "\n\n");
         		
-        		//On remer le JTextField vide
-        		inputFile.setText("");
-        		//Et on l'insère dans la BDD aussi
-        		try {
-					CDBI.Insert_messBDD(file_message);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+        		if(CFT.get_dest()!=null && client1.get_dest()!=null) {
+        			//On récupère le path du fichier glissé et déposé
+	        		String testArea = inputFile.getText();
+	        		
+	        		//on prépare le chemin du fichier et on le met dans notre client d'envoi de fichier
+	        		CFT.set_file(testArea);
+	        		//CFT.set_file(sous_chaine);
+	        		//On envoie le fichier
+	        		CFT.run();
+	        		//on envoie aussi un message au destinataire de type NORMAL pour notifier qu'il a reçu un fichier
+	        		
+	        		Message file_message = new Message("NORMAL", user_local, client1.get_dest());
+	        		
+	        		//On vérifie que l'envoi du fichier a bien eu lieu
+	        		if(CFT.get_envoi_ok()) {
+		        		file_message.set_data("Fichier envoyé par " + file_message.get_user_src().get_pseudo());
+		        		client1.set_message(file_message);
+		        		client1.run();
+		        		//On ajoute ce nouveau message dans le text area
+		        		textAreaMessage.append(file_message.get_data() + "\n");
+		        		textAreaMessage.append(file_message.get_date() + "\n\n");
+		        		//On remet le JTextField vide
+		        		inputFile.setText("");
+	        		}else {
+	        			inputFile.setText("Envoi echoué, fichier non trouvé, veuillez réessayer svp");
+	        		}
+	        		//Et on l'insère dans la BDD aussi
+	        		try {
+						CDBI.Insert_messBDD(file_message);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		}
         	}
         });
     } 
     
     //Permet de récupérer les valeurs sélectionnées  lors d'un click sur un user de la liste des users connectés
-    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,client_udp c, server_udp s, Client_File_Transfert CFT_param) {
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt, JList listUsers,Client_Udp c, Server_Udp s, Client_File_Transfert CFT_param) {
     	
         //set text on right here
     	if(listUsers.getModel().getSize()!=0) {

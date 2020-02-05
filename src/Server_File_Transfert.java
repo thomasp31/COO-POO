@@ -5,9 +5,6 @@ import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-
 
 public class Server_File_Transfert extends Thread{
 	    public int port_local;

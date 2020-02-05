@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 
-//import com.sun.jdi.connect.spi.Connection;
-
 public class ConnectionDB {
 	public Class c;
 	public String dbURL;
@@ -77,7 +75,7 @@ public class ConnectionDB {
 	
 	//méthode permettant d'insérer le message dans la base de donnée
 	public boolean Insert_messBDD(Message message) throws SQLException {
-		// dans la bdd on ne stocke que l'ID du User source et dest dans la table message ainsi que la dte et la data (texte important constituant le message)
+		//Dans la bdd on ne stocke que l'ID du User source et dest dans la table message ainsi que la dte et la data (texte important constituant le message)
 		int id_src = message.get_user_src().get_id();
 		int id_dest = message.get_user_dst().get_id();
 		String type = message.get_type();
@@ -90,7 +88,7 @@ public class ConnectionDB {
 	}
 	
 	
-	//methode permettant de charger l'historique de la conversation entre le user local et le user dest_dest
+	//Methode permettant de charger l'historique de la conversation entre le user local et le user dest_dest
 	public String get_historique(User user_local, User user_dest) throws SQLException {
 		
 		String resultat ="";

@@ -1,12 +1,9 @@
 import java.net.*;
 import java.io.*;
-import javax.swing.*;
-import java.lang.*;
-import java.util.*;
 
 //ivstypsa@laas.fr
 
-public class client_udp extends Thread{
+public class Client_Udp extends Thread{
     private int port_dest;
     private User user_src;
     private User user_dest;
@@ -14,7 +11,7 @@ public class client_udp extends Thread{
     private Message message_to_send;
 
     //Client permettant tout type d'envoi excepté les fichiers
-    public client_udp(int init_port_dest,User init_user_src){
+    public Client_Udp(int init_port_dest,User init_user_src){
         this.port_dest = init_port_dest;
         this.user_src = init_user_src;
         this.user_dest = null;
@@ -23,9 +20,7 @@ public class client_udp extends Thread{
 
 
     public void run(){
-    	//nbre inutile
-        int nbre = 0;
-
+    	
             try {
             	
             	//préparation à l'envoi

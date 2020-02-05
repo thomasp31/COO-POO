@@ -1,13 +1,8 @@
-import java.lang.reflect.*;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.Enumeration;
 import java.net.NetworkInterface; 
 import java.util.*;
 import java.io.Serializable;
-import javax.swing.JList;
 
 public class User implements Serializable{
 	
@@ -153,38 +148,6 @@ public class User implements Serializable{
 		 return local_ip_address;
 	 }
 	  
-	 //permet d'ajouter une conversation a la liste des conversations actives de l'user
-	 //inutile car finalement pas utilisé
-	 /*
-	 public void ajouter_conversation(Conversation c) {
-		 list_conversation.add(c);
-	 }
-	 */
-	 //retourne une conversation de l'user grace a son id
-	 //Inutile car Conversation pas utilisé
-	 /*
-	 public Conversation get_conversation_by_id(int id_conv) {
-		 
-		 Conversation returned_conversation = new Conversation(666,null,null);
-		 //System.out.println("get_by_id 1... \n");
-		 
-		 if (this.list_conversation==null) {
-				System.out.println("conversation non existante dans la liste"); 
-				//System.out.println("get_by_id 2... \n");
-		 }
-		 
-		 else { 
-			for(int i = 0 ; i < this.list_conversation.size(); i++) {
-				 if (this.list_conversation.get(i).get_id_conv()== id_conv) {
-					 returned_conversation = list_conversation.get(i);
-				 }
-			 }
-		 }
-		 return returned_conversation;
-		 
-		 
-	 }*/
-
 	public int get_port_envoi() {
 		return port_envoi;
 	}
