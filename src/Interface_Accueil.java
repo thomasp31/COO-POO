@@ -41,7 +41,7 @@ public class Interface_Accueil {
     	user_local = u_local;
     	
     	//Création de la partie graphique
-    	JFrame f=new JFrame("my chat");
+    	JFrame f=new JFrame("KitChat");
         f.setSize(400,400);         
         
         /*Définition des Panel*/
