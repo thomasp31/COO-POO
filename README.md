@@ -7,7 +7,10 @@ Pour lancer notre application il suffit donc de faire la commande suivante dans 
 * ./KitChat
 * ou simplement double cliquer sur le fichier KitChat puis sur démarrer si votre système d'exploitation le propose.
 
-Une fois la seconde commande lancée, on se situe sur l'écran de connexion à l'application.
+So jamais ça ne se lance vriment pas même avec la commande sur le terminal, vous pouvez taper cette commande sur le terminal dans le dossier src :
+$ java -cp .:mysql-connector.jar main
+
+Une fois la commande lancée, on se situe sur l'écran de connexion à l'application.
 
 ## Connexion en tant qu'administrateur
 Entrer Login : Admin
@@ -23,7 +26,7 @@ Pierre/Pierre,
 Gerard/Gerard,
 Jean/Jean
 
-Possibilité aussi de créer un User depuis l'interface admin et ensuite se conneter avec celui-ci.
+Possibilité aussi de créer un User depuis l'interface admin et ensuite se connecter avec celui-ci.
 
 ## Utilisation de la parti clavardage
 
