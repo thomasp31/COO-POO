@@ -31,3 +31,7 @@ L'interface de chat est très simple :
 * Sur la gauche, on voit la liste des users connectés. Un click sur l'un d'eux affiche la conversation que nous avons eu la dernière fois avec cet utilisateur et on peut lui parler.
 * Au milieu on a 3 zones; la fenêtre de chat, la zone de DragNDrop de fichier et le bouton pour envoyer le fichier puis en dessous la zone pour entrer le texte a envoyé et le bouton d'envoi du texte.
 * Sur la droite, si aucun fichier n'est reçu il n'y a rien mais quand un fichier est reçu, il s'affiche dans une liste (ressemblante avec celle des utilisateurs connectés) et on peut cliquer dessus pour l'ouvrir (fichier limités à 60Ko).
+
+## Deconnexion
+
+La déconnexion se fait automatiquement en quittant l'application en cliquant sur la petite croix de fermeture de fenêtre.
