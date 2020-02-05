@@ -35,7 +35,7 @@ public class Connection_Interface extends JFrame implements ActionListener {
     	
         // User Label
         user_label = new JLabel();
-        user_label.setText("User Name :");
+        user_label.setText("Login :");
         userName_text = new JTextField();
         
         // Password Label
