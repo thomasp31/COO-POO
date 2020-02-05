@@ -3,9 +3,9 @@
 ## Déploiement de l'application
 
 Notre application n'a pas pu être mise sous format .jar à cause de l'utilisation d'une base de donnée centralisée.
-Pour lancer notre application il suffit donc de cloner notre github et de lancer les commandes suivantes depuis le fichier racine de notre arborescence (COO-POO) :
-* javac *.java
-* puis # java -cp .:mysql-connector.jar main
+Pour lancer notre application il suffit donc de faire la commande suivante dans un terminal depuis le dossier racine de notre arborescence (COO-POO) :
+* ./KitChat
+* ou simplement double cliquer sur le fichier KitChat puis sur démarrer.
 
 Une fois la seconde commande lancée, on se situe sur l'écran de connexion à l'application.
 
